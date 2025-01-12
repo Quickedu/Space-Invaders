@@ -1,0 +1,12 @@
+{
+    "editor.tabSize": 6,
+    "editor.minimap.autohide": false,
+    "workbench.navigationControl.enabled": true,
+    "workbench.quickOpen.closeOnFocusLost": false,
+    "workbench.activityBar.location": "default",
+    "workbench.colorTheme": "Monokai",
+    "workbench.preferredDarkColorTheme": "Monokai",
+    "workbench.iconTheme": "material-icon-theme",
+    "workbench.editor.pinnedTabSizing": "normal",
+    "workbench.editor.enablePreview": false
+}

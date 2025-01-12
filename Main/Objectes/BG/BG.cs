@@ -11,4 +11,8 @@ class BG{
         positionR = pos;
         img = new Image(imatge);
     }
+    public void background(GraphicsContext gfx, Rectangle rect)
+    {
+        gfx.DrawImage(img, rect);
+    }
 }
