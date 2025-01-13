@@ -11,10 +11,10 @@ class Nau{
     public Image skin {get;set;}
     private string [] pathskin = {"nau1.png","nau2.png","nau3.png","nau4.png","nau5.png","nau6.png","nau7.png","nau8.png"};
     private int i = 0;
+    public List <int> dispars {get;set;}
     public Nau (Rectangle rect)
     {
         posicioR=rect;
-        
     }
     public void scroll (){
         skin = new Image (pathskin[i]);
@@ -56,5 +56,10 @@ class Nau{
     }
     public void spawn (Rectangle rect, GraphicsContext gfx){
         gfx.DrawImage(skin, posicioV);
+    }
+    public void dispara (){
+        if (Input.CheckKey(Key.Up,ButtonState.Down)){
+            
+        }
     }
 }

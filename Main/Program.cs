@@ -22,6 +22,7 @@ namespace Space
         private static List <Alien> invaders = new();
         private static List <Bala> bales = new ();
         private static Dictionary <string , int> puntuacio = new ();
+        private static string dificultat;
         private static int status = 0; // 0 inici, 1 tria nau, 2 joc, 3 ending, 4 registre persona;
         static void Main (){
             Application.Run( () => {
@@ -78,6 +79,10 @@ namespace Space
                 gfx.DrawText(text2,(window.Height,window.Width),Font.Default,30,TextAlign.Center);
                 gfx.DrawText(text3,(window.Height,window.Width),Font.Default,30,TextAlign.Center);
                 coet.scroll();
+                if (coet.numeronau==0){
+                    dificultat = "Dificultat Normal";
+                } else {dificultat = "Dificultat Dificil";}
+                gfx.DrawText(dificultat,(window.Height,window.Width), Font.Default,30,TextAlign.Center);
                 if (Input.CheckKey(Key.Space,ButtonState.Pressed)){
                     var shipvect = new Vector(rect.Width/2,rect.Height-50);
                     coet.vect(shipvect);
@@ -107,7 +112,8 @@ namespace Space
                 alien.move(rect);
                 alien.spawn(rect);
             };
-            coet.spawn(gfx);
+            coet.spawn(rect,gfx);
+
             var fps = gfx.CurrentFPS;
             var Sfps = Math.Round(fps).ToString();
             gfx.DrawText(Sfps,(15,8),Font.Default,30);
@@ -120,7 +126,7 @@ namespace Space
                 var text4 = "Press Esc to exit";
                 //---------------------------------
                 foreach (var i in puntuacio){
-                    if (i.Key == ){
+                    if (puntuacio. ){
                         var text2 = $"You: {i.Value}";
                         gfx.DrawText(text2,(window.Height,window.Width),Font.Default,30,TextAlign.Center);
                     }
