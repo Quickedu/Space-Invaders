@@ -2,11 +2,13 @@
 using Heirloom;
 using Microsoft.VisualBasic;
 using System.Runtime.CompilerServices;
+using System.ComponentModel.DataAnnotations.Schema;
 namespace Space
 {
     class Program
     {
         private static Window window;
+        private static Score score;
         private static Nau coet;
         private static BG space_bckground;
         private static BG inici;
@@ -14,21 +16,20 @@ namespace Space
         private static BG final;
         private static Boom explota;
         private static Bala bala;
-        private static BalaAliens balaalien;
-        private static Alien alienbasic;
-        private static Alien1 alienmid;
-        private static Alien2 alienhard;
+        private static Alien alien;
         private static Rectangle rect;
         private static List <Alien> invaders = new();
         private static List <Bala> bales = new ();
-        private static Dictionary <string , int> puntuacio = new ();
+        private static Dictionary <string , int> puntuacio {get;set;}= new ();
         private static string dificultat;
+        private static string nom;
         private static int status = 0; // 0 inici, 1 tria nau, 2 joc, 3 ending, 4 registre persona;
         static void Main (){
             Application.Run( () => {
                 window = new Window ("SpaceInvaders!") { IsResizable = false };
                 window.Maximize();
-                coet = new Nau (rect, "asd");
+                coet = new Nau (rect);
+                score = new Score();
                 var loop = GameLoop.Create(window.Graphics, OnUpdate);
             });
 
@@ -45,7 +46,7 @@ namespace Space
                     joc (gfx, dt);
                     break;
                     case 3:
-                    final (gfx, dt);
+                    Final (gfx, dt);
                     break;
                     case 4:
                     registre (gfx, dt);
@@ -55,7 +56,7 @@ namespace Space
             }
             static void Inici (GraphicsContext gfx, float dt, Window window, Rectangle rect){
                 inici.background(gfx,rect);
-                Thread.Sleep(333);
+                Thread.Sleep(500);
                 var text = "Space Invaders!";
                 var text2 = "Press Space to start";
                 var text3 = "Press Esc to exit";
@@ -69,7 +70,7 @@ namespace Space
                 if (Input.CheckKey(Key.Escape,ButtonState.Pressed)){
                     window.Close();
                 }
-                Thread.Sleep(666);
+                Thread.Sleep(500);
             }
             static void nau (GraphicsContext gfx, float dt){
                 var text = "Choose your ship!";
@@ -89,49 +90,64 @@ namespace Space
                     status = 4;
                     return;
                 }
-            }
-            static void joc (GraphicsContext gfx, float dt){
-            space_bckground.background(gfx,rect);
-
-            coet.mou(rect);
-            coet.dispara();
-            foreach (var bala in bales){
-                foreach (var alien in invaders){
-                    if (bala.tocar(alien)){
-                        if (alien.hp -1 == 0){
-                            invaders.Remove(alien);
-                            return;
-                        } else {
-                            alien.hp--;
-                            return;
-                        }
-                    }
+                if (Input.CheckKey(Key.Escape,ButtonState.Down)){
+                    window.Close();
                 }
             }
-            foreach (var alien in invaders){
-                alien.move(rect);
-                alien.spawn(rect);
-            };
-            coet.spawn(rect,gfx);
+            static void joc (GraphicsContext gfx, float dt){
+                rect = new Rectangle((0,0), window.Size); 
+                space_bckground.background(gfx,rect);
+                foreach (var alien in invaders){
 
-            var fps = gfx.CurrentFPS;
-            var Sfps = Math.Round(fps).ToString();
-            gfx.DrawText(Sfps,(15,8),Font.Default,30);
-            gfx.DrawText($"HP: {coet.HP}",(window.Height,window.Width),Font.Default,30,TextAlign.Right);
+                }
+                coet.mou(rect);
+                coet.dispara();
+                foreach (var bala in bales){
+                    foreach (var alien in invaders){
+                        if (bala.TocarAlien(alien)){
+                            bales.Remove(bala);
+                            if (alien.hp -1 == 0){
+                                invaders.Remove(alien);
+                            } else {
+                                alien.hp--;
+                            }
+                        }
+                    }
+                    if (bala.TocarNau (coet)){
+                        bales.Remove(bala);
+                        if (coet.HP -1 == 0){
+                            status = 3;
+                            return;
+                        }
+                        coet.HP--;
+                    }
+                }
+                foreach (var alien in invaders){
+                    alien.move(invaders,rect);
+                    alien.spawn(gfx);
+                };
+                coet.spawn(gfx);
+
+                var fps = gfx.CurrentFPS;
+                var Sfps = Math.Round(fps).ToString();
+                gfx.DrawText(Sfps,(15,8),Font.Default,30);
+                gfx.DrawText($"HP: {coet.HP}",(window.Height,window.Width),Font.Default,30,TextAlign.Right);
+                gfx.DrawText($"BALES: {5-coet.municio}/5",(window.Height,window.Width),Font.Default,30,TextAlign.Right);
             }
-            static void final (GraphicsContext gfx, float dt){
+            static void Final (GraphicsContext gfx, float dt){
                 final.background(gfx,rect);
                 var text = "Game Over!";
                 var text3 = "Press Space to restart";
                 var text4 = "Press Esc to exit";
                 //---------------------------------
+                if (puntuacio.FirstOrDefault())
                 foreach (var i in puntuacio){
-                    if (puntuacio. ){
-                        var text2 = $"You: {i.Value}";
-                        gfx.DrawText(text2,(window.Height,window.Width),Font.Default,30,TextAlign.Center);
+                    if (puntuacio.){
+                        var puntuacio = $"You: {i.Value}";
+                        gfx.DrawText(puntuacio,(window.Height,window.Width),Font.Default,30,TextAlign.Center);
                     }
                     if (coet.score > i.Value){
-                        i.value=coet.score;
+                        i = coet.score;
                         puntuacio.Add("You",coet.score);
                     }
                     var text2 = $"{i.Key}: {i.Value}";
@@ -149,9 +165,14 @@ namespace Space
                     window.Close();
                 }
             }
-            static void registre (){
-                var score = new Score(); //crear un registre per a la puntuacio on la persona posa el seu nom.
+            static void registre (GraphicsContext gfx, float dt){
+                //crear un registre per a la puntuacio on la persona posa el seu nom.
                 score.setname();
+                if (Input.CheckKey(Key.Enter,ButtonState.Down)){
+                    nom = score.name;
+                    status = 2;
+                    return;
+                }
                 
             }
         }
