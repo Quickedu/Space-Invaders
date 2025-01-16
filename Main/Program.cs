@@ -23,7 +23,7 @@ namespace Space
         private static Dictionary <string , int> puntuacio {get;set;}= new ();
         private static string dificultat;
         private static string nom;
-        private static int status = 0; // 0 inici, 1 tria nau, 2 joc, 3 ending, 4 registre persona;
+        private static int status = 0; // 0 inici, 1 tria nau, 2 joc, 3 ending, 4 registre persona, 5 puntuacions;
         static void Main (){
             Application.Run( () => {
                 window = new Window ("SpaceInvaders!") { IsResizable = false };
@@ -37,7 +37,7 @@ namespace Space
                 rect = new Rectangle(new Vector (0,0),window.Size);
                 switch (status){
                     case 0:
-                    Inici (gfx, dt, window , rect);
+                    Inici (gfx, dt);
                     break;
                     case 1:
                     nau (gfx, dt);
@@ -51,10 +51,13 @@ namespace Space
                     case 4:
                     registre (gfx, dt);
                     break;
+                    case 5:
+                    puntuacions (gfx, dt);
+                    break;
 
                 }
             }
-            static void Inici (GraphicsContext gfx, float dt, Window window, Rectangle rect){
+            static void Inici (GraphicsContext gfx, float dt){
                 inici.background(gfx,rect);
                 Thread.Sleep(500);
                 var text = "Space Invaders!";
@@ -103,6 +106,16 @@ namespace Space
                 coet.mou(rect);
                 coet.dispara();
                 foreach (var bala in bales){
+                    if (bala.TocarNau (coet)){
+                        bales.Remove(bala);
+                        if (coet.HP -1 == 0){
+                            status = 5;
+                            return;
+                        }
+                        coet.HP--;
+                    }
+                }
+                foreach (var bala in coet.dispars){
                     foreach (var alien in invaders){
                         if (bala.TocarAlien(alien)){
                             bales.Remove(bala);
@@ -112,14 +125,6 @@ namespace Space
                                 alien.hp--;
                             }
                         }
-                    }
-                    if (bala.TocarNau (coet)){
-                        bales.Remove(bala);
-                        if (coet.HP -1 == 0){
-                            status = 3;
-                            return;
-                        }
-                        coet.HP--;
                     }
                 }
                 foreach (var alien in invaders){
@@ -140,16 +145,11 @@ namespace Space
                 var text3 = "Press Space to restart";
                 var text4 = "Press Esc to exit";
                 //---------------------------------
-                if (puntuacio.FirstOrDefault())
-                foreach (var i in puntuacio){
-                    if (puntuacio.){
-                        var puntuacio = $"You: {i.Value}";
-                        gfx.DrawText(puntuacio,(window.Height,window.Width),Font.Default,30,TextAlign.Center);
-                    }
-                    if (coet.score > i.Value){
-                        i = coet.score;
-                        puntuacio.Add("You",coet.score);
-                    }
+                foreach (var i in puntuacio.OrderByDescending(x => x.Value).Take(10)){
+                
+                        var puntuacioText = $"{i.Key}: {i.Value}";
+                        gfx.DrawText(puntuacioText,(window.Height,window.Width),Font.Default,30,TextAlign.Center);
+                        
                     var text2 = $"{i.Key}: {i.Value}";
                     gfx.DrawText(puntuacio.ToString(),(window.Height,window.Width),Font.Default,30,TextAlign.Center);
                 }
@@ -168,12 +168,25 @@ namespace Space
             static void registre (GraphicsContext gfx, float dt){
                 //crear un registre per a la puntuacio on la persona posa el seu nom.
                 score.setname();
+                gfx.DrawText(score.name,(window.Height,window.Width),Font.Default,30,TextAlign.Center);
                 if (Input.CheckKey(Key.Enter,ButtonState.Down)){
-                    nom = score.name;
                     status = 2;
                     return;
                 }
-                
+            }
+            static void puntuacions (GraphicsContext gfx, float dt){
+                if (!puntuacio.ContainsKey(score.name)){ // Si el jugador no esta a la llista de puntuacions, s'afegira.
+                    puntuacio.Add(score.name,coet.score);
+                    return;
+                }
+                foreach (var j in puntuacio.OrderByDescending(x => x.Value)){
+                        if (j.Key == score.name){
+                        if (coet.score > j.Value){
+                            puntuacio[j.Key] = coet.score;
+                        }
+                    }
+                }
+                status=3;
             }
         }
     }

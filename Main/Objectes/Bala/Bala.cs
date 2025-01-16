@@ -13,6 +13,7 @@ class Bala{
         img = new Image (imatge);
         input = imatge;
         posicioV = vector;
+        posicioR = new Rectangle (posicioV,img.Size);
     }
 
     public void Move (GraphicsContext gfx){

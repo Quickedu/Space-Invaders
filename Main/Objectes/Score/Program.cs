@@ -1,95 +1,309 @@
 ﻿namespace Space;
+
+using System.Net;
 using Heirloom;
 public class Score{
       public List <string> input{get;set;}
       public string name {get;set;}
+      private int i = 0;
+      private int ii = 0;
       public Score(){ 
       }
       public void setname(){ //segurament cal posar totes les tecles amb input sobre la sting name. fleches R i L serveixen per poder correr per l'array.
-            foreach (var key in Enum.GetValues(typeof(Key))){
-                  if (Input.CheckKey(Key.A,ButtonState.Down)){
-                        input.Add(key.ToString());
+            if (i!=ii){
+                  input.RemoveAt(ii);
+                  input.Insert(i,"|");
+            } else {
+                  input.Insert(ii,"|");
+            }
+            ii = i;
+            if (Input.CheckKey(Key.A,ButtonState.Down)){
+                  if (i < input.Count-1){
+                        input.Insert(i,"A");
+                        i++;
+                        return;
                   }
-                  if (Input.CheckKey(Key.B,ButtonState.Down)){
-                        input.Add(key.ToString());
+                  input.Add("A");
+                  i++;
+                  return;
+            }
+            if (Input.CheckKey(Key.B,ButtonState.Down)){
+                  if (i< input.Count-1){
+                        input.Insert(i,"A");
+                        i++;
+                        return;
                   }
-                  if (Input.CheckKey(Key.C,ButtonState.Down)){
-                        input.Add(key.ToString());
+                  input.Add("B");
+                  i++;
+                  return;
+            }
+            if (Input.CheckKey(Key.C,ButtonState.Down)){
+                  if (i< input.Count-1){
+                        input.Insert(i,"C");
+                        i++;
+                        return;
                   }
-                  if (Input.CheckKey(Key.D,ButtonState.Down)){
-                        input.Add(key.ToString());
+                  input.Add("C");
+                  i++;
+                  return;
+            }
+            if (Input.CheckKey(Key.D,ButtonState.Down)){
+                  if (i< input.Count-1){
+                        input.Insert(i,"D");
+                        i++;
+                        return;
                   }
-                  if (Input.CheckKey(Key.E,ButtonState.Down)){
-                        input.Add(key.ToString());
+                  input.Add("D");
+                  i++;
+                  return;
+            }
+            if (Input.CheckKey(Key.E,ButtonState.Down)){
+                  if (i< input.Count-1){
+                        input.Insert(i,"E");
+                        i++;
+                        return;
                   }
-                  if (Input.CheckKey(Key.F,ButtonState.Down)){
-                        input.Add(key.ToString());
+                  input.Add("E");
+                  i++;
+                  return;
+            }
+            if (Input.CheckKey(Key.F,ButtonState.Down)){
+                  if (i< input.Count-1){
+                        input.Insert(i,"F");
+                        i++;
+                        return;
                   }
-                  if (Input.CheckKey(Key.G,ButtonState.Down)){
-                        input.Add(key.ToString());
+                  input.Add("F");
+                  i++;
+                  return;
+            }
+            if (Input.CheckKey(Key.G,ButtonState.Down)){
+                  if (i< input.Count-1){
+                        input.Insert(i,"G");
+                        i++;
+                        return;
                   }
-                  if (Input.CheckKey(Key.H,ButtonState.Down)){
-                        input.Add(key.ToString());
+                  input.Add("G");
+                  i++;
+                  return;
+            }
+            if (Input.CheckKey(Key.H,ButtonState.Down)){
+                  if (i< input.Count-1){
+                        input.Insert(i,"H");
+                        i++;
+                        return;
                   }
-                  if (Input.CheckKey(Key.I,ButtonState.Down)){
-                        input.Add(key.ToString());
+                  input.Add("H");
+                  i++;
+                  return;
+            }
+            if (Input.CheckKey(Key.I,ButtonState.Down)){
+                  if (i< input.Count-1){
+                        input.Insert(i,"I");
+                        i++;
+                        return;
                   }
-                  if (Input.CheckKey(Key.J,ButtonState.Down)){
-                        input.Add(key.ToString());
+                  input.Add("I");
+                  i++;
+                  return;
+            }
+            if (Input.CheckKey(Key.J,ButtonState.Down)){
+                  if (i< input.Count-1){
+                        input.Insert(i,"J");
+                        i++;
+                        return;
                   }
-                  if (Input.CheckKey(Key.K,ButtonState.Down)){
-                        input.Add(key.ToString());
+                  input.Add("J");
+                  i++;
+                  return;
+            }
+            if (Input.CheckKey(Key.K,ButtonState.Down)){
+                  if (i< input.Count-1){
+                        input.Insert(i,"K");
+                        i++;
+                        return;
                   }
-                  if (Input.CheckKey(Key.L,ButtonState.Down)){
-                        input.Add(key.ToString());
+                  input.Add("K");
+                  i++;
+                  return;
+            }
+            if (Input.CheckKey(Key.L,ButtonState.Down)){
+                  if (i< input.Count-1){
+                        input.Insert(i,"L");
+                        i++;
+                        return;
                   }
-                  if (Input.CheckKey(Key.M,ButtonState.Down)){
-                        input.Add(key.ToString());
+                  input.Add("L");
+                  i++;
+                  return;
+            }
+            if (Input.CheckKey(Key.M,ButtonState.Down)){
+                  if (i< input.Count-1){
+                        input.Insert(i,"M");
+                        i++;
+                        return;
                   }
-                  if (Input.CheckKey(Key.N,ButtonState.Down)){
-                        input.Add(key.ToString());
+                  input.Add("M");
+                  i++;
+                  return;
+            }
+            if (Input.CheckKey(Key.N,ButtonState.Down)){
+                  if (i< input.Count-1){
+                        input.Insert(i,"N");
+                        i++;
+                        return;
                   }
-                  if (Input.CheckKey(Key.O,ButtonState.Down)){
-                        input.Add(key.ToString());
+                  input.Add("N");
+                  i++;
+                  return;
+            }
+            if (Input.CheckKey(Key.O,ButtonState.Down)){
+                  if (i< input.Count-1){
+                        input.Insert(i,"O");
+                        i++;
+                        return;
                   }
-                  if (Input.CheckKey(Key.P,ButtonState.Down)){
-                        input.Add(key.ToString());
+                  input.Add("O");
+                  i++;
+                  return;
+            }
+            if (Input.CheckKey(Key.P,ButtonState.Down)){
+                  if (i< input.Count-1){
+                        input.Insert(i,"P");
+                        i++;
+                        return;
                   }
-                  if (Input.CheckKey(Key.Q,ButtonState.Down)){
-                        input.Add(key.ToString());
+                  input.Add("P");
+                  i++;
+                  return;
+            }
+            if (Input.CheckKey(Key.Q,ButtonState.Down)){
+                  if (i< input.Count-1){
+                        input.Insert(i,"Q");
+                        i++;
+                        return;
                   }
-                  if (Input.CheckKey(Key.R,ButtonState.Down)){
-                        input.Add(key.ToString());
+                  input.Add("Q");
+                  i++;
+                  return;
+            }
+            if (Input.CheckKey(Key.R,ButtonState.Down)){
+                  if (i< input.Count-1){
+                        input.Insert(i,"R");
+                        i++;
+                        return;
                   }
-                  if (Input.CheckKey(Key.S,ButtonState.Down)){
-                        input.Add(key.ToString());
+                  input.Add("R");
+                  i++;
+                  return;
+            }
+            if (Input.CheckKey(Key.S,ButtonState.Down)){
+                  if (i< input.Count-1){
+                        input.Insert(i,"S");
+                        i++;
+                        return;
                   }
-                  if (Input.CheckKey(Key.T,ButtonState.Down)){
-                        input.Add(key.ToString());
+                  input.Add("S");
+                  i++;
+                  return;
+            }
+            if (Input.CheckKey(Key.T,ButtonState.Down)){
+                  if (i< input.Count-1){
+                        input.Insert(i,"T");
+                        i++;
+                        return;
                   }
-                  if (Input.CheckKey(Key.U,ButtonState.Down)){
-                        input.Add(key.ToString());
+                  input.Add("T");
+                  i++;
+                  return;
+            }
+            if (Input.CheckKey(Key.U,ButtonState.Down)){
+                  if (i< input.Count-1){
+                        input.Insert(i,"U");
+                        i++;
+                        return;
                   }
-                  if (Input.CheckKey(Key.V,ButtonState.Down)){
-                        input.Add(key.ToString());
+                  input.Add("U");
+                  i++;
+                  return;
+            }
+            if (Input.CheckKey(Key.V,ButtonState.Down)){
+                  if (i< input.Count-1){
+                        input.Insert(i,"V");
+                        i++;
+                        return;
                   }
-                  if (Input.CheckKey(Key.W,ButtonState.Down)){
-                        input.Add(key.ToString());
+                  input.Add("V");
+                  i++;
+                  return;
+            }
+            if (Input.CheckKey(Key.W,ButtonState.Down)){
+                  if (i< input.Count-1){
+                        input.Insert(i,"W");
+                        i++;
+                        return;
                   }
-                  if (Input.CheckKey(Key.X,ButtonState.Down)){
-                        input.Add(key.ToString());
+                  input.Add("W");
+                  i++;
+                  return;
+            }
+            if (Input.CheckKey(Key.X,ButtonState.Down)){
+                  if (i< input.Count-1){
+                        input.Insert(i,"X");
+                        i++;
+                        return;
                   }
-                  if (Input.CheckKey(Key.Y,ButtonState.Down)){
-                        input.Add(key.ToString());
+                  input.Add("X");
+                  i++;
+                  return;
+            }
+            if (Input.CheckKey(Key.Y,ButtonState.Down)){
+                  if (i < input.Count-1){
+                        input.Insert(i,"Y");
+                        i++;
+                        return;
                   }
-                  if (Input.CheckKey(Key.Z,ButtonState.Down)){
-                        input.Add(key.ToString());
+                  input.Add("Y");
+                  i++;
+            }
+            if (Input.CheckKey(Key.Z,ButtonState.Down)){
+                  if (i< input.Count-1){
+                        input.Insert(i,"Z");
+                        i++;
+                        return;
+                  }
+                  input.Add("Z");
+                  i++;
+                  return;
+            }
+            if (Input.CheckKey(Key.Space,ButtonState.Down)){
+                  if (i< input.Count-1){
+                        input.Insert(i," ");
+                        i++;
+                        return;
+                  }
+                  input.Add(" ");
+                  i++;
+                  return;
+            }
+            if (Input.CheckKey(Key.Backspace,ButtonState.Down)){
+                  input.RemoveAt(i);
+                  i--;
+            }
+            if (Input.CheckKey(Key.Right,ButtonState.Down)){
+                  if (i < input.Count){
+                        i++;
                   }
             }
+            if (Input.CheckKey(Key.Left, ButtonState.Down)){
+                  if (i > 0){
+                        i--;
+                  }
+            }            
       }
       public void nametostring(){
-            foreach (var i in input){
-                  name += i;
+            foreach (var lletra in input){
+                  name += lletra;
             }
       }
 }
