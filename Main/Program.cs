@@ -1,11 +1,8 @@
 ﻿using Heirloom.Desktop;
 using Heirloom;
-using Microsoft.VisualBasic;
-using System.Runtime.CompilerServices;
-using System.ComponentModel.DataAnnotations.Schema;
 namespace Space
 {
-    class Program
+    public class Program
     {
         private static Window window;
         private static Score score;
@@ -15,7 +12,6 @@ namespace Space
         private static BG personalitzacio;
         private static BG final;
         private static Boom explota;
-        private static Bala bala;
         private static Alien alien;
         private static Rectangle rect;
         private static List <Alien> invaders = new();
@@ -90,6 +86,7 @@ namespace Space
                 if (Input.CheckKey(Key.Space,ButtonState.Pressed)){
                     var shipvect = new Vector(rect.Width/2,rect.Height-50);
                     coet.vect(shipvect);
+                    crearalien();
                     status = 4;
                     return;
                 }
@@ -145,15 +142,12 @@ namespace Space
                 var text3 = "Press Space to restart";
                 var text4 = "Press Esc to exit";
                 //---------------------------------
-                foreach (var i in puntuacio.OrderByDescending(x => x.Value).Take(10)){
-                
-                        var puntuacioText = $"{i.Key}: {i.Value}";
-                        gfx.DrawText(puntuacioText,(window.Height,window.Width),Font.Default,30,TextAlign.Center);
-                        
-                    var text2 = $"{i.Key}: {i.Value}";
-                    gfx.DrawText(puntuacio.ToString(),(window.Height,window.Width),Font.Default,30,TextAlign.Center);
+                foreach (var i in puntuacio.OrderByDescending(x => x.Value).Take(10)){ //agafem els 10 més elevats.
+                    var puntuacioText = $"{i.Key}: {i.Value}";
+                    for (int j = 1; j <= 10; j++){    //BUCLE PER ESCRIURE LA PUNTUACIO DE TOTS ELS JUGADORS GUARDATS DINS EL TXT.
+                        gfx.DrawText(puntuacioText,(50+5*j,window.Width),Font.Default,30,TextAlign.Center);
+                    }
                 }
-                //--------------------------------- BUCLE PER ESCRIURE LA PUNTUACIO DE TOTS ELS JUGADORS GUARDATS DINS EL TXT.
                 gfx.DrawText(text,(window.Height,window.Width),Font.Default,30,TextAlign.Center);
                 gfx.DrawText(text3,(window.Height,window.Width),Font.Default,30,TextAlign.Center);
                 gfx.DrawText(text4,(window.Height,window.Width),Font.Default,30,TextAlign.Center);
@@ -175,18 +169,31 @@ namespace Space
                 }
             }
             static void puntuacions (GraphicsContext gfx, float dt){
+                //passem del txt a la llista de puntuacions.
+                File.ReadAllLines("./Objectes/Score/score.txt").Select(line => line.Split('-')).ToList().ForEach(parts => puntuacio[parts[0]] = int.Parse(parts[1]));
                 if (!puntuacio.ContainsKey(score.name)){ // Si el jugador no esta a la llista de puntuacions, s'afegira.
                     puntuacio.Add(score.name,coet.score);
                     return;
                 }
-                foreach (var j in puntuacio.OrderByDescending(x => x.Value)){
-                        if (j.Key == score.name){
-                        if (coet.score > j.Value){
-                            puntuacio[j.Key] = coet.score;
-                        }
+                if (coet.score > puntuacio[score.name]){ // Si el jugador ja esta a la llista de puntuacions, es comprovara si la seva puntuacio es mes gran que la que ja te.
+                    puntuacio[score.name] = coet.score;
+                }               
+                File.WriteAllLines("./Objectes/Score/score.txt", [.. puntuacio.OrderByDescending(x => x.Value).Select(x => $"{x.Key}-{x.Value}").Take(10)]);
+                status=3;
+            }
+            static void crearalien(){
+                score.newspawn++;
+                var i = 0;
+                while (!invaders[i].posicioR.Overlaps(rect)){
+                    if (coet.numeronau==0){
+                        var alien = new Alien("alien1.png",new Rectangle((40+(40*i),40), new Size(40,40)));
+                        invaders.Add(alien);
+                        i++;
+                    } else {
+                    invaders.Add(alien);
+                    i++;
                     }
                 }
-                status=3;
             }
         }
     }

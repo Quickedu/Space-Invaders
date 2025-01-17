@@ -1,12 +1,12 @@
 ﻿namespace Space;
-
-using System.Net;
 using Heirloom;
+using Space;
 public class Score{
       public List <string> input{get;set;}
       public string name {get;set;}
       private int i = 0;
       private int ii = 0;
+      public int newspawn {get;set;} = 0;
       public Score(){ 
       }
       public void setname(){ //segurament cal posar totes les tecles amb input sobre la sting name. fleches R i L serveixen per poder correr per l'array.

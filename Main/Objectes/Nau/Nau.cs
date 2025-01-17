@@ -1,9 +1,8 @@
-﻿using System.Reflection.Metadata.Ecma335;
-using Heirloom;
-using Heirloom.Collections;
-using Space;
+﻿using Heirloom;
+using System.Collections.Generic;
+namespace Space;
 
-class Nau{
+public class Nau{
     public int HP {get;set;}
     public int speed {get;set;} = 5; 
     public int numeronau {get;set;} = 0;

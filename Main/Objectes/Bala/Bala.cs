@@ -1,9 +1,8 @@
-﻿using System.Security.Cryptography.X509Certificates;
-using Heirloom;
-using Microsoft.VisualBasic;
-using Space;
+﻿using Heirloom;
+namespace Space;
+using System.Collections.Generic;
 
-class Bala{
+public class Bala{
     private Image img;
     private string input;
     private Vector posicioV;
