@@ -7,9 +7,9 @@ public class Bala{
     private string input;
     private Vector posicioV;
     private Rectangle posicioR;
-    public Bala (string imatge, Vector vector)
+    public Bala (string imatge, Image image , Vector vector)
     {
-        img = new Image (imatge);
+        img = image;
         input = imatge;
         posicioV = vector;
         posicioR = new Rectangle (posicioV,img.Size);

@@ -8,6 +8,7 @@ public class Nau{
     public int numeronau {get;set;} = 0;
     public int score {get;set;}
     public int municio {get;set;}
+    private Image imatgebala;
     private Vector posicioV;
     public Rectangle posicioR {get;set;}
     public Image skin {get;set;}
@@ -16,6 +17,7 @@ public class Nau{
     public List <Bala> dispars {get;set;}
     public Nau (Rectangle rect)
     {
+        imatgebala = new Image ("Balanau.png");
         posicioR=rect;
         skin = new Image (pathskin[0]);
     }
@@ -64,7 +66,7 @@ public class Nau{
     public void dispara (){
         if (Input.CheckKey(Key.Up,ButtonState.Down)){
             if (dispars.Count<5){
-                var bala = new Bala ("BalaNau.png",posicioV);
+                var bala = new Bala ("BalaNau.png", imatgebala , posicioV);
                 dispars.Add(bala);
                 return;
             }
