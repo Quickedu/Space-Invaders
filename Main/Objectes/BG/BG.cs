@@ -4,13 +4,11 @@ namespace Space{
         private Image img;
         private Vector positionV;
         private Rectangle positionR;
-        public BG(Rectangle pos, string imatge)
-        {
+        public BG(Rectangle pos, string imatge){
             positionR = pos;
             img = new Image(imatge);
         }
-        public void background(GraphicsContext gfx, Rectangle rect)
-        {
+        public void background(GraphicsContext gfx, Rectangle rect){
             gfx.DrawImage(img, rect);
         }
         public void Canvifons (Score score){

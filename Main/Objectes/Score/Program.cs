@@ -1,6 +1,5 @@
 ﻿namespace Space;
 using Heirloom;
-using Space;
 public class Score{
       public List <string> input{get;set;}
       public string name {get;set;}

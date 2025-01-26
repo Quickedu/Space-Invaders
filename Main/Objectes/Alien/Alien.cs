@@ -1,6 +1,5 @@
 ﻿using Heirloom;
 namespace Space;
-using Space;
 public class Alien{
     public int hp {get; set;}
     public Rectangle posicioR {get;set;}

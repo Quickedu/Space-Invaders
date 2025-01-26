@@ -96,7 +96,7 @@ namespace Space
             rect = new Rectangle((0,0), window.Size); 
             space_bckground.background(gfx,rect);
             foreach (var alien in invaders){
-
+                  alien.spawn(gfx);
             }
             coet.mou(rect);
             coet.dispara();
