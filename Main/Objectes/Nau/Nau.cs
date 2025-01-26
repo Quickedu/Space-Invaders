@@ -3,12 +3,13 @@ using Heirloom;
 using Heirloom.Collections;
 using Space;
 
-class Nau{
+public class Nau{
     public int HP {get;set;}
     public int speed {get;set;} = 5; 
     public int numeronau {get;set;} = 0;
     public int score {get;set;}
     public int municio {get;set;}
+    public int newspawn {get;set;}
     private Vector posicioV;
     public Rectangle posicioR {get;set;}
     public Image skin {get;set;}
@@ -65,7 +66,7 @@ class Nau{
     public void dispara (){
         if (Input.CheckKey(Key.Up,ButtonState.Down)){
             if (dispars.Count<5){
-                var bala = new Bala ("BalaNau.png",posicioV);
+                var bala = new Bala ("BalaNau.png",a,posicioV);
                 dispars.Add(bala);
                 return;
             }

@@ -1,19 +1,18 @@
 ﻿using Heirloom;
-using Heirloom.Desktop;
-
 namespace Space;
-//ALIEN BASE HP 1
-class Alien{
+public class Alien{
     public int hp {get; set;}
     public Rectangle posicioR {get;set;}
     public Vector posicioV {get;set;}
     private Image img;
     private int direccio = 1;
     private int velocitat = 5;
-    public Alien(string imatge)
+    public Alien(string imatge, Rectangle rectangle)
     {
-        img = new Image (imatge);
-        hp = 1;
+        posicioR = rectangle;
+        img = new Image(imatge);
+        if (imatge == "alien1.png") hp = 1;
+        else hp = 1;
     }
 
     public bool costat (List <Alien> invaders, Vector newpos, Rectangle rect){
