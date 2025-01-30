@@ -7,12 +7,13 @@ public class Nau{
     public int numeronau {get;set;} = 0;
     public int score {get;set;}
     public int municio {get;set;}
+    public int newspawn {get;set;} = 0;
     private Image imatgebala;
     private Vector posicioV;
     public Rectangle posicioR {get;set;}
     public Image skin {get;set;}
-    private string [] pathskin = {"nau1.png","nau2.png","nau3.png","nau4.png","nau5.png","nau6.png","nau7.png","nau8.png"};
-    private int i = 0;
+    private readonly string [] pathskin = ["/Images/nau1.png","/Images/nau2.png","/Images/nau3.png","/Images/nau4.png","/Images/nau5.png","/Images/nau6.png","/Images/nau7.png","/Images/nau8.png"];
+    public int i {get;set;} = 0; 
     public List <Bala> dispars {get;set;}
     public Nau (Rectangle rect)
     {

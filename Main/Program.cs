@@ -13,6 +13,7 @@ namespace Space
                 window = new Window ("SpaceInvaders!") { IsResizable = false };
                 window.Maximize();
                 game = new Game(window);
+                game.load();
                 var loop = GameLoop.Create(window.Graphics, OnUpdate);
             });
 

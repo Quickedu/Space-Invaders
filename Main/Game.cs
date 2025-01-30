@@ -1,5 +1,6 @@
 using Heirloom.Desktop;
 using Heirloom;
+using System.Runtime.CompilerServices;
 
 namespace Space
 {
@@ -20,13 +21,23 @@ namespace Space
       private  Dictionary <string , int> puntuacio {get;set;}= new ();
       private  string dificultat;
       private  string nom;
+      private readonly string [] Pathcoet = ["/Images/nau1.png","/Images/nau2.png","/Images/nau3.png","/Images/nau4.png","/Images/nau5.png","/Images/nau6.png","/Images/nau7.png","/Images/nau8.png"];
+      private List <Image> AlienSkins = new();
+      private List <Image> NauSkins = new();
       private  int status = 0; // 0 inici, 1 tria nau, 2 joc, 3 ending, 4 registre persona, 5 puntuacions;
       public Game(Window finestra)
       {
+            window = finestra;
+      }
+      public void load (){
             coet = new Nau (rect);
             score = new Score();
-            window = finestra;
             personalitzacio = new BG(rect,"personalitzacio.png");
+            for (int i=1;i<=8;i++){
+                  NauSkins.Add(new Image ($"/Images/nau{i}.png"));
+            }
+            AlienSkins.Add(new Image ("/Objectes/Alien/Images/alien1.png"));
+            AlienSkins.Add(new Image ("/Objectes/Alien/Images/alien2.png"));
       }
       public void Run(GraphicsContext gfx, float dt){
             rect = new Rectangle(new Vector (0,0),window.Size);
@@ -77,6 +88,8 @@ namespace Space
             gfx.DrawText(text2,(window.Height,window.Width),Font.Default,30,TextAlign.Center);
             gfx.DrawText(text3,(window.Height,window.Width),Font.Default,30,TextAlign.Center);
             coet.scroll();
+            Skin = Pathcoet[coet.i];
+
             if (coet.numeronau==0){
                   dificultat = "Dificultat Normal";
             } else {dificultat = "Dificultat Dificil";}
@@ -112,14 +125,14 @@ namespace Space
             }
             foreach (var bala in coet.dispars){
                   foreach (var alien in invaders){
-                  if (bala.TocarAlien(alien)){
-                        bales.Remove(bala);
-                        if (alien.hp -1 == 0){
-                              invaders.Remove(alien);
-                        } else {
-                              alien.hp--;
+                        if (bala.TocarAlien(alien)){
+                              bales.Remove(bala);
+                              if (alien.hp -1 == 0){
+                                    invaders.Remove(alien);
+                              } else {
+                                    alien.hp--;
+                              }
                         }
-                  }
                   }
             }
             foreach (var alien in invaders){
@@ -180,16 +193,18 @@ namespace Space
             status=3;
       }
       public void crearalien(){
-            score.newspawn++;
-            var i = 0;
-            while (!invaders[i].posicioR.Overlaps(rect)){
-                  if (coet.numeronau==0){
-                  var alien = new Alien("alien1.png",new Rectangle((40+(40*i),40), new Size(40,40)));
-                  invaders.Add(alien);
-                  i++;
-                  } else {
-                  invaders.Add(alien);
-                  i++;
+            coet.newspawn++;
+            for (int ii = 1 ; ii<=3 ; ii++){
+                  var i = 0;
+                  while (!invaders[i].posicioR.Overlaps(rect)){
+                        if (coet.numeronau==0){
+                        var alien = new Alien(AlienSkins[0],new Rectangle((40+(40*i),40*ii+10), new Size(40,40)));
+                        invaders.Add(alien);
+                        i++;
+                        } else {
+                        invaders.Add(alien);
+                        i++;
+                        }
                   }
             }
       }

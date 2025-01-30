@@ -5,15 +5,12 @@ public class Score{
       public string name {get;set;}
       private int i = 0;
       private int ii = 0;
-      public int newspawn {get;set;} = 0;
       public Score(){ 
       }
       public void setname(){ //segurament cal posar totes les tecles amb input sobre la sting name. fleches R i L serveixen per poder correr per l'array.
-            if (i!=ii){
+            if (i!=ii || i==0){
                   input.RemoveAt(ii);
                   input.Insert(i,"|");
-            } else {
-                  input.Insert(ii,"|");
             }
             ii = i;
             if (Input.CheckKey(Key.A,ButtonState.Down)){

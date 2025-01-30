@@ -11,11 +11,11 @@ namespace Space{
         public void background(GraphicsContext gfx, Rectangle rect){
             gfx.DrawImage(img, rect);
         }
-        public void Canvifons (Score score){
-            if (score.newspawn == 2){
+        public void Canvifons (Nau nau){
+            if (nau.newspawn == 2){
                 img = new Image("fons2.png");
             }
-            if (score.newspawn == 5){
+            if (nau.newspawn == 5){
                 img = new Image("fons3.png");
             }
         }

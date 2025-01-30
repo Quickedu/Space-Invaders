@@ -7,12 +7,10 @@ public class Alien{
     private Image img;
     private int direccio = 1;
     private int velocitat = 5;
-    public Alien(string imatge, Rectangle rectangle)
+    public Alien(Image imatge, Rectangle rectangle)
     {
         posicioR = rectangle;
-        img = new Image(imatge);
-        if (imatge == "alien1.png") hp = 1;
-        else hp = 1;
+        img = imatge;
     }
 
     public bool costat (List <Alien> invaders, Vector newpos, Rectangle rect){
