@@ -30,12 +30,12 @@ namespace Space
             window = finestra;
       }
       public void load (){
-            coet = new Nau (rect);
             score = new Score();
-            personalitzacio = new BG(rect,"personalitzacio.png");
+            // personalitzacio = new BG(rect,"personalitzacio.png");
             for (int i=1;i<=8;i++){
-                  NauSkins.Add(new Image ($"/Images/nau{i}.png"));
+                  NauSkins.Add(new Image ($"Objectes/Nau/Images/nau{i}.png"));
             }
+            coet = new Nau (rect, NauSkins[0]);
             AlienSkins.Add(new Image ("/Objectes/Alien/Images/alien1.png"));
             AlienSkins.Add(new Image ("/Objectes/Alien/Images/alien2.png"));
       }
@@ -87,8 +87,7 @@ namespace Space
             gfx.DrawText(text,(window.Height,window.Width),Font.Default,30,TextAlign.Center);
             gfx.DrawText(text2,(window.Height,window.Width),Font.Default,30,TextAlign.Center);
             gfx.DrawText(text3,(window.Height,window.Width),Font.Default,30,TextAlign.Center);
-            coet.scroll();
-            Skin = Pathcoet[coet.i];
+            coet.scroll(NauSkins);
 
             if (coet.numeronau==0){
                   dificultat = "Dificultat Normal";
@@ -198,8 +197,7 @@ namespace Space
                   var i = 0;
                   while (!invaders[i].posicioR.Overlaps(rect)){
                         if (coet.numeronau==0){
-                        var alien = new Alien(AlienSkins[0],new Rectangle((40+(40*i),40*ii+10), new Size(40,40)));
-                        invaders.Add(alien);
+                        invaders.Add(new Alien(AlienSkins[0],new Rectangle((40+(40*i),40*ii+10), new Size(40,40))));
                         i++;
                         } else {
                         invaders.Add(alien);

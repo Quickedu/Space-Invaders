@@ -12,17 +12,16 @@ public class Nau{
     private Vector posicioV;
     public Rectangle posicioR {get;set;}
     public Image skin {get;set;}
-    private readonly string [] pathskin = ["/Images/nau1.png","/Images/nau2.png","/Images/nau3.png","/Images/nau4.png","/Images/nau5.png","/Images/nau6.png","/Images/nau7.png","/Images/nau8.png"];
     public int i {get;set;} = 0; 
     public List <Bala> dispars {get;set;}
-    public Nau (Rectangle rect)
+    public Nau (Rectangle rect, Image img)
     {
         imatgebala = new Image ("Balanau.png");
         posicioR=rect;
-        skin = new Image (pathskin[0]);
+        skin = img;
     }
-    public void scroll (){
-        skin = new Image (pathskin[i]);
+    public void scroll (List <Image> img){
+        skin = img[i];
         if (Input.CheckKey(Key.Right,ButtonState.Down)){
             i++;
         }
@@ -30,9 +29,9 @@ public class Nau{
             i--;
         }
         if (i<0){
-            i=pathskin.Length-1;
+            i=img.Count-1;
         }
-        if (i>pathskin.Length){
+        if (i>img.Count){
             i=0;
         }
         if (i<4){

@@ -10,5 +10,45 @@
   <ItemGroup>
     <PackageReference Include="Heirloom.Desktop" Version="1.0.2-beta" />
   </ItemGroup>
+  <ItemGroup>
+    <none Update="Objectes\Nau\Images\nau1.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </none>
+  </ItemGroup>
+    <ItemGroup>
+    <none Update="Objectes\Nau\Images\nau2.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </none>
+  </ItemGroup>
+    <ItemGroup>
+    <none Update="Objectes\Nau\Images\nau3.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </none>
+  </ItemGroup>
+    <ItemGroup>
+    <none Update="Objectes\Nau\Images\nau4.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </none>
+  </ItemGroup>
+    <ItemGroup>
+    <none Update="Objectes\Nau\Images\nau5.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </none>
+  </ItemGroup>
+    <ItemGroup>
+    <none Update="Objectes\Nau\Images\nau6.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </none>
+  </ItemGroup>
+    <ItemGroup>
+    <none Update="Objectes\Nau\Images\nau7.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </none>
+  </ItemGroup>
+    <ItemGroup>
+    <none Update="Objectes\Nau\Images\nau8.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </none>
+  </ItemGroup>
 
 </Project>
