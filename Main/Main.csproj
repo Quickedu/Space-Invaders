@@ -50,5 +50,65 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </none>
   </ItemGroup>
+  <ItemGroup>
+    <none Update="Objectes\Explosio\Images\Explosio.gif">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </none>
+  </ItemGroup>
+    <ItemGroup>
+    <none Update="Objectes\BG\Images\BGStart.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </none>
+  </ItemGroup>
+    <ItemGroup>
+    <none Update="Objectes\BG\Images\BGPersonalitzacio.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </none>
+  </ItemGroup>
+      <ItemGroup>
+    <none Update="Objectes\BG\Images\BGGame1.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </none>
+  </ItemGroup>
+      <ItemGroup>
+    <none Update="Objectes\BG\Images\BGGame2.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </none>
+  </ItemGroup>
+    <ItemGroup>
+    <none Update="Objectes\BG\Images\BGEnd.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </none>
+  </ItemGroup>
+    <ItemGroup>
+    <none Update="Objectes\Alien\Images\Alien1.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </none>
+  </ItemGroup>
+      <ItemGroup>
+    <none Update="Objectes\Alien\Images\Alien2-1.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </none>
+  </ItemGroup>
+      <ItemGroup>
+    <none Update="Objectes\Alien\Images\Alien2-2.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </none>
+  </ItemGroup>
+      <ItemGroup>
+    <none Update="Objectes\Alien\Images\Alien2-3.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </none>
+  </ItemGroup>
+      <ItemGroup>
+    <none Update="Objectes\Bala\Images\Balaalien.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </none>
+  </ItemGroup>
+      <ItemGroup>
+    <none Update="Objectes\Bala\Images\Balanau.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </none>
+  </ItemGroup>
 
 </Project>

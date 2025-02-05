@@ -15,6 +15,7 @@ namespace Space
                 game = new Game(window);
                 game.load();
                 var loop = GameLoop.Create(window.Graphics, OnUpdate);
+                loop.Start();
             });
 
             static void OnUpdate (GraphicsContext gfx, float dt){

@@ -1,7 +1,7 @@
 ﻿using Heirloom;
 namespace Space;
 
-public class Nau{
+public class Nau : Shoot_Objects{
     public int HP {get;set;}
     public int speed {get;set;} = 5; 
     public int numeronau {get;set;} = 0;
@@ -14,13 +14,13 @@ public class Nau{
     public Image skin {get;set;}
     public int i {get;set;} = 0; 
     public List <Bala> dispars {get;set;}
-    public Nau (Rectangle rect, Image img)
+    public Nau (Rectangle rect, Image img, Image imgbala)
     {
-        imatgebala = new Image ("Balanau.png");
+        imatgebala = imgbala;
         posicioR=rect;
         skin = img;
     }
-    public void scroll (List <Image> img){
+    public void Scroll (List <Image> img){
         skin = img[i];
         if (Input.CheckKey(Key.Right,ButtonState.Down)){
             i++;
@@ -46,7 +46,7 @@ public class Nau{
     public void velocitat (){
         speed = 5*(2-numeronau);
     }
-    public void mou (Rectangle rect){
+    public void Move (Rectangle rect){
         var newpos = new Rectangle(posicioV, skin.Size);
         if (Input.CheckKey(Key.Right,ButtonState.Down)){
             newpos.X += newpos.X + speed;
@@ -58,17 +58,18 @@ public class Nau{
             posicioV.X=newpos.X;
         }
     }
-    public void spawn (GraphicsContext gfx){
+    public void Spawn (GraphicsContext gfx){
         gfx.DrawImage(skin, posicioV);
         municio = dispars.Count();
     }
-    public void dispara (){
+    public bool Shoot (){
         if (Input.CheckKey(Key.Up,ButtonState.Down)){
             if (dispars.Count<5){
-                var bala = new Bala ("BalaNau.png", imatgebala , posicioV);
+                var bala = new Bala (0, imatgebala , posicioV , newspawn);
                 dispars.Add(bala);
-                return;
+                return true;
             }
         }
+        return false;
     }
 }

@@ -1,7 +1,7 @@
 ﻿namespace Space;
 using Heirloom;
 public class Score{
-      public List <string> input{get;set;}
+      public List <string> input{get;set;} = ["|"];
       public string name {get;set;}
       private int i = 0;
       private int ii = 0;
