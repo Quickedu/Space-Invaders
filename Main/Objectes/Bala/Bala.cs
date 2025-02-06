@@ -1,26 +1,27 @@
 ﻿using Heirloom;
 namespace Space;
-using System.Collections.Generic;
 
 public class Bala{
     private Image img;
-    private string input;
+    private int type;
     private Vector posicioV;
     private Rectangle posicioR;
-    public Bala (string imatge, Image image , Vector vector)
+    private int fase;
+    public Bala (int tipus, Image image , Vector vector, int ronda)
     {
+        type = tipus;
         img = image;
-        input = imatge;
         posicioV = vector;
         posicioR = new Rectangle (posicioV,img.Size);
+        fase = ronda;
     }
 
     public void Move (GraphicsContext gfx){
-        if (input=="BalaNau.png"){
-            posicioV.X -= 5;
+        if (type==0){
+            posicioV.X -= 5+fase;
         }
         else {
-            posicioV.X += 3;
+            posicioV.X += 3+fase-(fase/2);
         }
         gfx.DrawImage(img,posicioV);
     }

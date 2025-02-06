@@ -1,31 +1,27 @@
 ﻿using Heirloom;
 namespace Space;
 
-public class Nau{
+public class Nau : Shoot_Objects{
     public int HP {get;set;}
     public int speed {get;set;} = 5; 
     public int numeronau {get;set;} = 0;
     public int score {get;set;}
     public int municio {get;set;}
-<<<<<<< HEAD
-    public int newspawn {get;set;}
-=======
+    public int newspawn {get;set;} = 0;
     private Image imatgebala;
->>>>>>> 71080d7021e12fa02bda02025a6508af771479ec
     private Vector posicioV;
     public Rectangle posicioR {get;set;}
     public Image skin {get;set;}
-    private string [] pathskin = {"nau1.png","nau2.png","nau3.png","nau4.png","nau5.png","nau6.png","nau7.png","nau8.png"};
-    private int i = 0;
+    public int i {get;set;} = 0; 
     public List <Bala> dispars {get;set;}
-    public Nau (Rectangle rect)
+    public Nau (Rectangle rect, Image img, Image imgbala)
     {
-        imatgebala = new Image ("Balanau.png");
+        imatgebala = imgbala;
         posicioR=rect;
-        skin = new Image (pathskin[0]);
+        skin = img;
     }
-    public void scroll (){
-        skin = new Image (pathskin[i]);
+    public void Scroll (List <Image> img){
+        skin = img[i];
         if (Input.CheckKey(Key.Right,ButtonState.Down)){
             i++;
         }
@@ -33,9 +29,9 @@ public class Nau{
             i--;
         }
         if (i<0){
-            i=pathskin.Length-1;
+            i=img.Count-1;
         }
-        if (i>pathskin.Length){
+        if (i>img.Count){
             i=0;
         }
         if (i<4){
@@ -50,7 +46,7 @@ public class Nau{
     public void velocitat (){
         speed = 5*(2-numeronau);
     }
-    public void mou (Rectangle rect){
+    public void Move (Rectangle rect){
         var newpos = new Rectangle(posicioV, skin.Size);
         if (Input.CheckKey(Key.Right,ButtonState.Down)){
             newpos.X += newpos.X + speed;
@@ -62,21 +58,18 @@ public class Nau{
             posicioV.X=newpos.X;
         }
     }
-    public void spawn (GraphicsContext gfx){
+    public void Spawn (GraphicsContext gfx){
         gfx.DrawImage(skin, posicioV);
         municio = dispars.Count();
     }
-    public void dispara (){
+    public bool Shoot (){
         if (Input.CheckKey(Key.Up,ButtonState.Down)){
             if (dispars.Count<5){
-<<<<<<< HEAD
-                var bala = new Bala ("BalaNau.png",a,posicioV);
-=======
-                var bala = new Bala ("BalaNau.png", imatgebala , posicioV);
->>>>>>> 71080d7021e12fa02bda02025a6508af771479ec
+                var bala = new Bala (0, imatgebala , posicioV , newspawn);
                 dispars.Add(bala);
-                return;
+                return true;
             }
         }
+        return false;
     }
 }

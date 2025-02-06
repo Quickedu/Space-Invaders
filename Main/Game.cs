@@ -1,32 +1,54 @@
 using Heirloom.Desktop;
 using Heirloom;
+using System.Runtime.CompilerServices;
+using System.ComponentModel;
 
 namespace Space
 {
     public class Game
     {
-      private  Window window;
-      private  Score score;
-      private  Nau coet;
-      private  BG space_bckground;
-      private  BG inici;
-      private  BG personalitzacio;
-      private  BG final;
-      private  Boom explota;
-      private  Alien alien;
-      private  Rectangle rect;
-      private  List <Alien> invaders = new();
-      private  List <Bala> bales = new ();
-      private  Dictionary <string , int> puntuacio {get;set;}= new ();
+      private Window window;
+      private Score score;
+      private Nau coet;
+      private BG bg;
+      private Boom explota;
+      private Rectangle rect;
+      private List <Alien> invaders = new();
+      private List <Bala> bales = new ();
+      private Dictionary <string , int> puntuacio {get;set;}= new ();
       private  string dificultat;
       private  string nom;
-      private  int status = 0; // 0 inici, 1 tria nau, 2 joc, 3 ending, 4 registre persona, 5 puntuacions;
+      private List <Image> AlienSkins = new();
+      private List <Image> NauSkins = new();
+      private List <Image> BalaSkins = new();
+      private Image explosio;
+      private List <Image> BGrounds = new();
+      private  int status = 0; // 0 inici, 1 tria nau, 2 joc, 3 ending mostant puntuacions, 4 registre persona, 5 calcul puntuacions;
       public Game(Window finestra)
       {
-            coet = new Nau (rect);
-            score = new Score();
             window = finestra;
-            personalitzacio = new BG(rect,"personalitzacio.png");
+      }
+      public void load (){
+            score = new Score();
+            // personalitzacio = new BG(rect,"personalitzacio.png");
+            for (int i=1;i<=8;i++){
+                  NauSkins.Add(new Image ($"Objectes/Nau/Images/nau{i}.png"));
+            }
+            BalaSkins.Add(new Image ("Objectes/Bala/Images/Balanau.png"));
+            BalaSkins.Add(new Image ("Objectes/Bala/Images/Balaalien.png"));
+            AlienSkins.Add(new Image ("Objectes/Alien/Images/Alien1.png"));
+            AlienSkins.Add(new Image ("Objectes/Alien/Images/Alien2-1.png"));
+            AlienSkins.Add(new Image ("Objectes/Alien/Images/Alien2-2.png"));
+            AlienSkins.Add(new Image ("Objectes/Alien/Images/Alien2-3.png"));
+            explosio = new Image ("Objectes/Explosio/Images/Explosio.gif");
+            BGrounds.Add(new Image ("Objectes/BG/Images/BGStart.png"));
+            BGrounds.Add(new Image ("Objectes/BG/Images/BGPersonalitzacio.png"));
+            BGrounds.Add(new Image ("Objectes/BG/Images/BGGame1.png"));
+            BGrounds.Add(new Image ("Objectes/BG/Images/BGGame2.png"));
+            BGrounds.Add(new Image ("Objectes/BG/Images/BGEnd.png"));
+            coet = new Nau (rect, NauSkins[0], BalaSkins[0]);
+            bg = new BG ();
+
       }
       public void Run(GraphicsContext gfx, float dt){
             rect = new Rectangle(new Vector (0,0),window.Size);
@@ -50,10 +72,9 @@ namespace Space
                   puntuacions (gfx, dt);
                   break;
             }
+            bg.Canvifons(coet, BGrounds ,status);
       }
       public void Inici (GraphicsContext gfx, float dt){
-            inici.background(gfx,rect);
-            Thread.Sleep(500);
             var text = "Space Invaders!";
             var text2 = "Press Space to start";
             var text3 = "Press Esc to exit";
@@ -67,7 +88,7 @@ namespace Space
             if (Input.CheckKey(Key.Escape,ButtonState.Pressed)){
                   window.Close();
             }
-            Thread.Sleep(500);
+            bg.Spawn(gfx,rect);
       }
       public void nau (GraphicsContext gfx, float dt){
             var text = "Choose your ship!";
@@ -76,7 +97,8 @@ namespace Space
             gfx.DrawText(text,(window.Height,window.Width),Font.Default,30,TextAlign.Center);
             gfx.DrawText(text2,(window.Height,window.Width),Font.Default,30,TextAlign.Center);
             gfx.DrawText(text3,(window.Height,window.Width),Font.Default,30,TextAlign.Center);
-            coet.scroll();
+            coet.Scroll(NauSkins);
+
             if (coet.numeronau==0){
                   dificultat = "Dificultat Normal";
             } else {dificultat = "Dificultat Dificil";}
@@ -91,15 +113,15 @@ namespace Space
             if (Input.CheckKey(Key.Escape,ButtonState.Down)){
                   window.Close();
             }
+            bg.Spawn(gfx,rect);            
       }
       public void joc (GraphicsContext gfx, float dt){
             rect = new Rectangle((0,0), window.Size); 
-            space_bckground.background(gfx,rect);
+            bg.Spawn(gfx,rect);
             foreach (var alien in invaders){
-                  alien.spawn(gfx);
+                  alien.Shoot();
             }
-            coet.mou(rect);
-            coet.dispara();
+            coet.Shoot();
             foreach (var bala in bales){
                   if (bala.TocarNau (coet)){
                   bales.Remove(bala);
@@ -112,30 +134,32 @@ namespace Space
             }
             foreach (var bala in coet.dispars){
                   foreach (var alien in invaders){
-                  if (bala.TocarAlien(alien)){
-                        bales.Remove(bala);
-                        if (alien.hp -1 == 0){
-                              invaders.Remove(alien);
-                        } else {
-                              alien.hp--;
+                        if (bala.TocarAlien(alien)){
+                              bales.Remove(bala);
+                              if (alien.hp -1 == 0){
+                                    invaders.Remove(alien);
+                              } else {
+                                    alien.hp--;
+                              }
                         }
-                  }
                   }
             }
             foreach (var alien in invaders){
-                  alien.move(invaders,rect);
-                  alien.spawn(gfx);
+                  alien.Move(invaders,rect);
+                  alien.Spawn(gfx);
             };
-            coet.spawn(gfx);
+            
+            coet.Move(rect);
+            coet.Spawn(gfx);
 
             var fps = gfx.CurrentFPS;
             var Sfps = Math.Round(fps).ToString();
             gfx.DrawText(Sfps,(15,8),Font.Default,30);
             gfx.DrawText($"HP: {coet.HP}",(window.Height,window.Width),Font.Default,30,TextAlign.Right);
             gfx.DrawText($"BALES: {5-coet.municio}/5",(window.Height,window.Width),Font.Default,30,TextAlign.Right);
+            bg.Spawn(gfx,rect);
       }
       public void Final (GraphicsContext gfx, float dt){
-            final.background(gfx,rect);
             var text = "Game Over!";
             var text3 = "Press Space to restart";
             var text4 = "Press Esc to exit";
@@ -156,6 +180,7 @@ namespace Space
             if (Input.CheckKey(Key.Escape,ButtonState.Pressed)){
                   window.Close();
             }
+            bg.Spawn(gfx,rect);
       }
       public void registre (GraphicsContext gfx, float dt){
             //crear un registre per a la puntuacio on la persona posa el seu nom.
@@ -180,16 +205,19 @@ namespace Space
             status=3;
       }
       public void crearalien(){
-            score.newspawn++;
-            var i = 0;
-            while (!invaders[i].posicioR.Overlaps(rect)){
-                  if (coet.numeronau==0){
-                  var alien = new Alien("alien1.png",new Rectangle((40+(40*i),40), new Size(40,40)));
-                  invaders.Add(alien);
-                  i++;
-                  } else {
-                  invaders.Add(alien);
-                  i++;
+            coet.newspawn++;
+            for (int ii = 1 ; ii<=3 ; ii++){
+                  var i = 0;
+                  invaders.Add(new Alien(AlienSkins[0],new Rectangle((40+(40*i),40*ii+10), new Size(40,40))));
+                  while (!invaders[i].posicioR.Overlaps(rect)){
+                        if (coet.numeronau == 1 && coet.newspawn % 5 == 0){
+                                    invaders.Add(new Alien(AlienSkins[0],new Rectangle((40+(40*i),40*ii+10), new Size(40,40))));
+                                    i++;
+                              }
+                        if (coet.numeronau==0){
+                        invaders.Add(new Alien(AlienSkins[0],new Rectangle((40+(40*i),40*ii+10), new Size(40,40))));
+                        i++;
+                        }
                   }
             }
       }

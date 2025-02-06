@@ -2,21 +2,26 @@
 namespace Space{
     public class BG{
         private Image img;
-        private Vector positionV;
-        private Rectangle positionR;
-        public BG(Rectangle pos, string imatge){
-            positionR = pos;
-            img = new Image(imatge);
+        public BG(){
         }
-        public void background(GraphicsContext gfx, Rectangle rect){
+        public void Spawn(GraphicsContext gfx, Rectangle rect){
             gfx.DrawImage(img, rect);
         }
-        public void Canvifons (Nau nau){
-            if (nau.newspawn == 2){
-                img = new Image("fons2.png");
+        public void Canvifons (Nau nau,List <Image> BGrounds,int status){
+            if (status == 0){
+                img = BGrounds [0];
             }
-            if (nau.newspawn == 5){
-                img = new Image("fons3.png");
+            if (status == 1 || status == 4){
+                img = BGrounds [1];
+            }
+            if (status == 2 && nau.newspawn < 4){
+                img = BGrounds[2];
+            }
+            if (nau.newspawn >= 4){
+                img = BGrounds[3];
+            }
+            if (status == 3){
+                img = BGrounds[4];
             }
         }
     }
