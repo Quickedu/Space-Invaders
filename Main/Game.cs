@@ -72,9 +72,9 @@ namespace Space
                   puntuacions (gfx, dt);
                   break;
             }
-            bg.Canvifons(coet, BGrounds ,status);
       }
       public void Inici (GraphicsContext gfx, float dt){
+            bg.Canvifons(coet, BGrounds ,status);
             var text = "Space Invaders!";
             var text2 = "Press Space to start";
             var text3 = "Press Esc to exit";
@@ -83,6 +83,7 @@ namespace Space
             gfx.DrawText(text3,(window.Height,window.Width),Font.Default,30,TextAlign.Center);
             if (Input.CheckKey(Key.Space,ButtonState.Pressed)){
                   status = 1;
+                  bg.Canvifons(coet, BGrounds ,status);
                   return;
             }
             if (Input.CheckKey(Key.Escape,ButtonState.Pressed)){
@@ -157,9 +158,9 @@ namespace Space
             gfx.DrawText(Sfps,(15,8),Font.Default,30);
             gfx.DrawText($"HP: {coet.HP}",(window.Height,window.Width),Font.Default,30,TextAlign.Right);
             gfx.DrawText($"BALES: {5-coet.municio}/5",(window.Height,window.Width),Font.Default,30,TextAlign.Right);
-            bg.Spawn(gfx,rect);
       }
       public void Final (GraphicsContext gfx, float dt){
+            bg.Spawn(gfx,rect);
             var text = "Game Over!";
             var text3 = "Press Space to restart";
             var text4 = "Press Esc to exit";
@@ -175,18 +176,20 @@ namespace Space
             gfx.DrawText(text4,(window.Height,window.Width),Font.Default,30,TextAlign.Center);
             if (Input.CheckKey(Key.Space,ButtonState.Pressed)){
                   status = 1;
+                  bg.Canvifons(coet, BGrounds ,status);
                   return;
             }
             if (Input.CheckKey(Key.Escape,ButtonState.Pressed)){
                   window.Close();
             }
-            bg.Spawn(gfx,rect);
+
       }
       public void registre (GraphicsContext gfx, float dt){
             //crear un registre per a la puntuacio on la persona posa el seu nom.
             score.setname();
             gfx.DrawText(score.name,(window.Height,window.Width),Font.Default,30,TextAlign.Center);
             if (Input.CheckKey(Key.Enter,ButtonState.Down)){
+                  bg.Canvifons(coet, BGrounds ,status);
                   status = 2;
                   return;
             }
@@ -202,6 +205,7 @@ namespace Space
                   puntuacio[score.name] = coet.score;
             }               
             File.WriteAllLines("./Objectes/Score/score.txt", [.. puntuacio.OrderByDescending(x => x.Value).Select(x => $"{x.Key}-{x.Value}").Take(10)]);
+            bg.Canvifons(coet, BGrounds ,status);
             status=3;
       }
       public void crearalien(){
