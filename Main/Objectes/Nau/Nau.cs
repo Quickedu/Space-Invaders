@@ -1,7 +1,5 @@
-﻿using System.Reflection.Metadata.Ecma335;
-using Heirloom;
-using Heirloom.Collections;
-using Space;
+﻿using Heirloom;
+namespace Space;
 
 public class Nau{
     public int HP {get;set;}
@@ -9,7 +7,11 @@ public class Nau{
     public int numeronau {get;set;} = 0;
     public int score {get;set;}
     public int municio {get;set;}
+<<<<<<< HEAD
     public int newspawn {get;set;}
+=======
+    private Image imatgebala;
+>>>>>>> 71080d7021e12fa02bda02025a6508af771479ec
     private Vector posicioV;
     public Rectangle posicioR {get;set;}
     public Image skin {get;set;}
@@ -18,6 +20,7 @@ public class Nau{
     public List <Bala> dispars {get;set;}
     public Nau (Rectangle rect)
     {
+        imatgebala = new Image ("Balanau.png");
         posicioR=rect;
         skin = new Image (pathskin[0]);
     }
@@ -66,7 +69,11 @@ public class Nau{
     public void dispara (){
         if (Input.CheckKey(Key.Up,ButtonState.Down)){
             if (dispars.Count<5){
+<<<<<<< HEAD
                 var bala = new Bala ("BalaNau.png",a,posicioV);
+=======
+                var bala = new Bala ("BalaNau.png", imatgebala , posicioV);
+>>>>>>> 71080d7021e12fa02bda02025a6508af771479ec
                 dispars.Add(bala);
                 return;
             }

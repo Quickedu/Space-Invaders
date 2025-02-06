@@ -1,4 +1,7 @@
 ﻿using Heirloom;
+namespace Space;
+using Space;
+
 
 class Boom{
     private Image img;
