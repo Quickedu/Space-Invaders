@@ -24,7 +24,7 @@ namespace Space
       private List <Image> BalaSkins = new();
       private Image explosio;
       private List <Image> BGrounds = new();
-      private  int status = 5; // 0 inici, 1 tria nau, 2 joc, 3 ending mostant puntuacions, 4 registre persona, 5 calcul puntuacions;
+      private  int status = 0; // 0 inici, 1 tria nau, 2 joc, 3 ending mostant puntuacions, 4 registre persona, 5 calcul puntuacions;
       public Game(Window finestra)
       {
             window = finestra;
@@ -154,6 +154,7 @@ namespace Space
                         }
                   }
             }
+            
             foreach (var alien in invaders){
                   alien.Move(invaders,rect);
                   alien.Spawn(gfx);

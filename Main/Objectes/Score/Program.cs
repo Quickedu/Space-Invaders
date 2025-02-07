@@ -13,6 +13,7 @@ public class Score{
                   if (i < input.Count-1){
                         input.Insert(i,"A");
                         i++;
+                        ii++;
                         return;
                   }
                   input.Add("A");
@@ -23,6 +24,7 @@ public class Score{
                   if (i< input.Count-1){
                         input.Insert(i,"A");
                         i++;
+                        ii++;
                         return;
                   }
                   input.Add("B");
@@ -33,6 +35,7 @@ public class Score{
                   if (i< input.Count-1){
                         input.Insert(i,"C");
                         i++;
+                        ii++;
                         return;
                   }
                   input.Add("C");
@@ -42,6 +45,7 @@ public class Score{
             if (Input.CheckKey(Key.D,ButtonState.Pressed)){
                   if (i< input.Count-1){
                         input.Insert(i,"D");
+                        ii++;
                         i++;
                         return;
                   }
@@ -52,6 +56,7 @@ public class Score{
             if (Input.CheckKey(Key.E,ButtonState.Pressed)){
                   if (i< input.Count-1){
                         input.Insert(i,"E");
+                        ii++;
                         i++;
                         return;
                   }
@@ -62,6 +67,7 @@ public class Score{
             if (Input.CheckKey(Key.F,ButtonState.Pressed)){
                   if (i< input.Count-1){
                         input.Insert(i,"F");
+                        ii++;
                         i++;
                         return;
                   }
@@ -72,6 +78,7 @@ public class Score{
             if (Input.CheckKey(Key.G,ButtonState.Pressed)){
                   if (i< input.Count-1){
                         input.Insert(i,"G");
+                        ii++;
                         i++;
                         return;
                   }
@@ -82,6 +89,7 @@ public class Score{
             if (Input.CheckKey(Key.H,ButtonState.Pressed)){
                   if (i< input.Count-1){
                         input.Insert(i,"H");
+                        ii++;
                         i++;
                         return;
                   }
@@ -93,6 +101,7 @@ public class Score{
                   if (i< input.Count-1){
                         input.Insert(i,"I");
                         i++;
+                        ii++;
                         return;
                   }
                   input.Add("I");
@@ -103,6 +112,7 @@ public class Score{
                   if (i< input.Count-1){
                         input.Insert(i,"J");
                         i++;
+                        ii++;
                         return;
                   }
                   input.Add("J");
@@ -113,6 +123,7 @@ public class Score{
                   if (i< input.Count-1){
                         input.Insert(i,"K");
                         i++;
+                        ii++;
                         return;
                   }
                   input.Add("K");
@@ -123,6 +134,7 @@ public class Score{
                   if (i< input.Count-1){
                         input.Insert(i,"L");
                         i++;
+                        ii++;
                         return;
                   }
                   input.Add("L");
@@ -133,6 +145,7 @@ public class Score{
                   if (i< input.Count-1){
                         input.Insert(i,"M");
                         i++;
+                        ii++;
                         return;
                   }
                   input.Add("M");
@@ -143,6 +156,7 @@ public class Score{
                   if (i< input.Count-1){
                         input.Insert(i,"N");
                         i++;
+                        ii++;
                         return;
                   }
                   input.Add("N");
@@ -153,6 +167,7 @@ public class Score{
                   if (i< input.Count-1){
                         input.Insert(i,"O");
                         i++;
+                        ii++;
                         return;
                   }
                   input.Add("O");
@@ -163,6 +178,7 @@ public class Score{
                   if (i< input.Count-1){
                         input.Insert(i,"P");
                         i++;
+                        ii++;
                         return;
                   }
                   input.Add("P");
@@ -173,6 +189,7 @@ public class Score{
                   if (i< input.Count-1){
                         input.Insert(i,"Q");
                         i++;
+                        ii++;
                         return;
                   }
                   input.Add("Q");
@@ -183,6 +200,7 @@ public class Score{
                   if (i< input.Count-1){
                         input.Insert(i,"R");
                         i++;
+                        ii++;
                         return;
                   }
                   input.Add("R");
@@ -193,6 +211,7 @@ public class Score{
                   if (i< input.Count-1){
                         input.Insert(i,"S");
                         i++;
+                        ii++;
                         return;
                   }
                   input.Add("S");
@@ -203,6 +222,7 @@ public class Score{
                   if (i< input.Count-1){
                         input.Insert(i,"T");
                         i++;
+                        ii++;
                         return;
                   }
                   input.Add("T");
@@ -213,6 +233,7 @@ public class Score{
                   if (i< input.Count-1){
                         input.Insert(i,"U");
                         i++;
+                        ii++;
                         return;
                   }
                   input.Add("U");
@@ -223,6 +244,7 @@ public class Score{
                   if (i< input.Count-1){
                         input.Insert(i,"V");
                         i++;
+                        ii++;
                         return;
                   }
                   input.Add("V");
@@ -233,6 +255,7 @@ public class Score{
                   if (i< input.Count-1){
                         input.Insert(i,"W");
                         i++;
+                        ii++;
                         return;
                   }
                   input.Add("W");
@@ -253,6 +276,7 @@ public class Score{
                   if (i < input.Count-1){
                         input.Insert(i,"Y");
                         i++;
+                        ii++;
                         return;
                   }
                   input.Add("Y");
@@ -262,6 +286,7 @@ public class Score{
                   if (i< input.Count-1){
                         input.Insert(i,"Z");
                         i++;
+                        ii++;
                         return;
                   }
                   input.Add("Z");
@@ -295,7 +320,7 @@ public class Score{
                         i--;
                   }
             }
-            if (i!=ii){
+             if (i!=ii){
                   input.RemoveAt(ii);
                   input.Insert(i,"|");
             }
