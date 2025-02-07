@@ -14,24 +14,22 @@ public class Nau : Shoot_Objects{
     public Image skin {get;set;}
     public int i {get;set;} = 0; 
     public List <Bala> dispars {get;set;}
-    public Nau (Rectangle rect, Image img, Image imgbala)
+    public Nau (Rectangle rect, Image imgbala)
     {
         imatgebala = imgbala;
         posicioR=rect;
-        skin = img;
     }
     public void Scroll (List <Image> img){
-        skin = img[i];
-        if (Input.CheckKey(Key.Right,ButtonState.Down)){
+        if (Input.CheckKey(Key.Right,ButtonState.Pressed)){
             i++;
         }
-        if (Input.CheckKey(Key.Left,ButtonState.Down)){
+        if (Input.CheckKey(Key.Left,ButtonState.Pressed)){
             i--;
         }
         if (i<0){
             i=img.Count-1;
         }
-        if (i>img.Count){
+        if (i>img.Count-1){
             i=0;
         }
         if (i<4){
@@ -39,6 +37,7 @@ public class Nau : Shoot_Objects{
         } else {
             numeronau = 1;
         }
+        skin = img[i];
     }
     public void vect (Vector vector){
         posicioV = vector;
@@ -47,7 +46,7 @@ public class Nau : Shoot_Objects{
         speed = 5*(2-numeronau);
     }
     public void Move (Rectangle rect){
-        var newpos = new Rectangle(posicioV, skin.Size);
+        var newpos = new Rectangle(posicioV, size:(30,50));
         if (Input.CheckKey(Key.Right,ButtonState.Down)){
             newpos.X += newpos.X + speed;
         }
@@ -55,11 +54,11 @@ public class Nau : Shoot_Objects{
             newpos.X -= newpos.X + speed;
         }
         if (rect.Contains(newpos)){
-            posicioV.X=newpos.X;
+            posicioR=newpos;
         }
     }
     public void Spawn (GraphicsContext gfx){
-        gfx.DrawImage(skin, posicioV);
+        gfx.DrawImage(skin, posicioR);
         municio = dispars.Count();
     }
     public bool Shoot (){

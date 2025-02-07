@@ -110,5 +110,10 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </none>
   </ItemGroup>
+        <ItemGroup>
+    <none Update="Objectes\Score\Score.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </none>
+  </ItemGroup>
 
 </Project>

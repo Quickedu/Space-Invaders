@@ -18,12 +18,13 @@ namespace Space
       private Dictionary <string , int> puntuacio {get;set;}= new ();
       private  string dificultat;
       private  string nom;
+      private Rectangle coetrectangle;
       private List <Image> AlienSkins = new();
       private List <Image> NauSkins = new();
       private List <Image> BalaSkins = new();
       private Image explosio;
       private List <Image> BGrounds = new();
-      private  int status = 0; // 0 inici, 1 tria nau, 2 joc, 3 ending mostant puntuacions, 4 registre persona, 5 calcul puntuacions;
+      private  int status = 5; // 0 inici, 1 tria nau, 2 joc, 3 ending mostant puntuacions, 4 registre persona, 5 calcul puntuacions;
       public Game(Window finestra)
       {
             window = finestra;
@@ -32,7 +33,7 @@ namespace Space
             score = new Score();
             // personalitzacio = new BG(rect,"personalitzacio.png");
             for (int i=1;i<=8;i++){
-                  NauSkins.Add(new Image ($"Objectes/Nau/Images/nau{i}.png"));
+                  NauSkins.Insert(i-1,new Image ($"Objectes/Nau/Images/nau{i}.png"));
             }
             BalaSkins.Add(new Image ("Objectes/Bala/Images/Balanau.png"));
             BalaSkins.Add(new Image ("Objectes/Bala/Images/Balaalien.png"));
@@ -46,7 +47,7 @@ namespace Space
             BGrounds.Add(new Image ("Objectes/BG/Images/BGGame1.png"));
             BGrounds.Add(new Image ("Objectes/BG/Images/BGGame2.png"));
             BGrounds.Add(new Image ("Objectes/BG/Images/BGEnd.png"));
-            coet = new Nau (rect, NauSkins[0], BalaSkins[0]);
+            coet = new Nau (rect, BalaSkins[0]);
             bg = new BG ();
 
       }
@@ -75,12 +76,13 @@ namespace Space
       }
       public void Inici (GraphicsContext gfx, float dt){
             bg.Canvifons(coet, BGrounds ,status);
+            bg.Spawn(gfx,rect);
             var text = "Space Invaders!";
             var text2 = "Press Space to start";
             var text3 = "Press Esc to exit";
-            gfx.DrawText(text,(window.Height,window.Width),Font.Default,30,TextAlign.Center);
-            gfx.DrawText(text2,(window.Height,window.Width),Font.Default,30,TextAlign.Center);
-            gfx.DrawText(text3,(window.Height,window.Width),Font.Default,30,TextAlign.Center);
+            gfx.DrawText($"{text}",(rect.Width/2,rect.Height/2-300),Font.Default,180,TextAlign.Center);
+            gfx.DrawText($"{text2}",(rect.Width/2,rect.Height/2-100),Font.Default,100,TextAlign.Center);
+            gfx.DrawText($"{text3}",(rect.Width/2,rect.Height/2+100),Font.Default,60,TextAlign.Center);
             if (Input.CheckKey(Key.Space,ButtonState.Pressed)){
                   status = 1;
                   bg.Canvifons(coet, BGrounds ,status);
@@ -89,21 +91,29 @@ namespace Space
             if (Input.CheckKey(Key.Escape,ButtonState.Pressed)){
                   window.Close();
             }
-            bg.Spawn(gfx,rect);
       }
       public void nau (GraphicsContext gfx, float dt){
+            bg.Spawn(gfx,rect);            
             var text = "Choose your ship!";
-            var text2 = "Press Right and Left arrow to change your ship";
+            var text2 = "Press LEFT and RIGHT arrow to change your ship";
             var text3 = "Press Space to select your ship";
-            gfx.DrawText(text,(window.Height,window.Width),Font.Default,30,TextAlign.Center);
-            gfx.DrawText(text2,(window.Height,window.Width),Font.Default,30,TextAlign.Center);
-            gfx.DrawText(text3,(window.Height,window.Width),Font.Default,30,TextAlign.Center);
+            gfx.Color = Color.Black;
+            gfx.DrawText(text,(rect.Width/2,rect.Height/2-250),Font.Default,180,TextAlign.Center);
+            gfx.DrawText(text2,(rect.Width/2,rect.Height/2-100),Font.Default,100,TextAlign.Center);
+            gfx.DrawText(text3,(rect.Width/2,rect.Height/2+280),Font.Default,30,TextAlign.Center);
+            gfx.Color = Color.White;
             coet.Scroll(NauSkins);
-
             if (coet.numeronau==0){
+                  coetrectangle = ((rect.Width/2-44,rect.Height/2+100),size:(80,100));
                   dificultat = "Dificultat Normal";
-            } else {dificultat = "Dificultat Dificil";}
-            gfx.DrawText(dificultat,(window.Height,window.Width), Font.Default,30,TextAlign.Center);
+            } else {
+                  dificultat = "Dificultat Dificil";
+                  coetrectangle = ((rect.Width/2-100,rect.Height/2+20),size:(200,250));
+                  }
+
+            gfx.DrawImage(coet.skin,coetrectangle);
+
+            gfx.DrawText($"Nau {coet.i} - {dificultat}",(rect.Width/2,rect.Height/2), Font.Default,30,TextAlign.Center);
             if (Input.CheckKey(Key.Space,ButtonState.Pressed)){
                   var shipvect = new Vector(rect.Width/2,rect.Height-50);
                   coet.vect(shipvect);
@@ -114,7 +124,6 @@ namespace Space
             if (Input.CheckKey(Key.Escape,ButtonState.Down)){
                   window.Close();
             }
-            bg.Spawn(gfx,rect);            
       }
       public void joc (GraphicsContext gfx, float dt){
             rect = new Rectangle((0,0), window.Size); 
@@ -186,8 +195,10 @@ namespace Space
       }
       public void registre (GraphicsContext gfx, float dt){
             //crear un registre per a la puntuacio on la persona posa el seu nom.
+            bg.Spawn(gfx,rect);
             score.setname();
-            gfx.DrawText(score.name,(window.Height,window.Width),Font.Default,30,TextAlign.Center);
+            gfx.DrawText(score.name,(window.Width/2,window.Height/2),Font.Default,200,TextAlign.Center);
+            gfx.DrawImage(coet.skin,((window.Width-100,window.Height-120),size:(80,100)));
             if (Input.CheckKey(Key.Enter,ButtonState.Down)){
                   bg.Canvifons(coet, BGrounds ,status);
                   status = 2;
@@ -196,7 +207,7 @@ namespace Space
       }
       public void puntuacions (GraphicsContext gfx, float dt){
             //passem del txt a la llista de puntuacions.
-            File.ReadAllLines("./Objectes/Score/score.txt").Select(line => line.Split('-')).ToList().ForEach(parts => puntuacio[parts[0]] = int.Parse(parts[1]));
+            File.ReadAllLines("Objectes/Score/score.txt").Select(line => line.Split('-')).ToList().ForEach(parts => puntuacio[parts[0]] = int.Parse(parts[1]));
             if (!puntuacio.ContainsKey(score.name)){ // Si el jugador no esta a la llista de puntuacions, s'afegira.
                   puntuacio.Add(score.name,coet.score);
                   return;

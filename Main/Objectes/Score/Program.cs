@@ -9,12 +9,7 @@ public class Score{
       public Score(){ 
       }
       public void setname(){ //segurament cal posar totes les tecles amb input sobre la sting name. fleches R i L serveixen per poder correr per l'array.
-            if (i!=ii || i==0){
-                  input.RemoveAt(ii);
-                  input.Insert(i,"|");
-            }
-            ii = i;
-            if (Input.CheckKey(Key.A,ButtonState.Down)){
+            if (Input.CheckKey(Key.A,ButtonState.Pressed)){
                   if (i < input.Count-1){
                         input.Insert(i,"A");
                         i++;
@@ -24,7 +19,7 @@ public class Score{
                   i++;
                   return;
             }
-            if (Input.CheckKey(Key.B,ButtonState.Down)){
+            if (Input.CheckKey(Key.B,ButtonState.Pressed)){
                   if (i< input.Count-1){
                         input.Insert(i,"A");
                         i++;
@@ -34,7 +29,7 @@ public class Score{
                   i++;
                   return;
             }
-            if (Input.CheckKey(Key.C,ButtonState.Down)){
+            if (Input.CheckKey(Key.C,ButtonState.Pressed)){
                   if (i< input.Count-1){
                         input.Insert(i,"C");
                         i++;
@@ -44,7 +39,7 @@ public class Score{
                   i++;
                   return;
             }
-            if (Input.CheckKey(Key.D,ButtonState.Down)){
+            if (Input.CheckKey(Key.D,ButtonState.Pressed)){
                   if (i< input.Count-1){
                         input.Insert(i,"D");
                         i++;
@@ -54,7 +49,7 @@ public class Score{
                   i++;
                   return;
             }
-            if (Input.CheckKey(Key.E,ButtonState.Down)){
+            if (Input.CheckKey(Key.E,ButtonState.Pressed)){
                   if (i< input.Count-1){
                         input.Insert(i,"E");
                         i++;
@@ -64,7 +59,7 @@ public class Score{
                   i++;
                   return;
             }
-            if (Input.CheckKey(Key.F,ButtonState.Down)){
+            if (Input.CheckKey(Key.F,ButtonState.Pressed)){
                   if (i< input.Count-1){
                         input.Insert(i,"F");
                         i++;
@@ -74,7 +69,7 @@ public class Score{
                   i++;
                   return;
             }
-            if (Input.CheckKey(Key.G,ButtonState.Down)){
+            if (Input.CheckKey(Key.G,ButtonState.Pressed)){
                   if (i< input.Count-1){
                         input.Insert(i,"G");
                         i++;
@@ -84,7 +79,7 @@ public class Score{
                   i++;
                   return;
             }
-            if (Input.CheckKey(Key.H,ButtonState.Down)){
+            if (Input.CheckKey(Key.H,ButtonState.Pressed)){
                   if (i< input.Count-1){
                         input.Insert(i,"H");
                         i++;
@@ -94,7 +89,7 @@ public class Score{
                   i++;
                   return;
             }
-            if (Input.CheckKey(Key.I,ButtonState.Down)){
+            if (Input.CheckKey(Key.I,ButtonState.Pressed)){
                   if (i< input.Count-1){
                         input.Insert(i,"I");
                         i++;
@@ -104,7 +99,7 @@ public class Score{
                   i++;
                   return;
             }
-            if (Input.CheckKey(Key.J,ButtonState.Down)){
+            if (Input.CheckKey(Key.J,ButtonState.Pressed)){
                   if (i< input.Count-1){
                         input.Insert(i,"J");
                         i++;
@@ -114,7 +109,7 @@ public class Score{
                   i++;
                   return;
             }
-            if (Input.CheckKey(Key.K,ButtonState.Down)){
+            if (Input.CheckKey(Key.K,ButtonState.Pressed)){
                   if (i< input.Count-1){
                         input.Insert(i,"K");
                         i++;
@@ -124,7 +119,7 @@ public class Score{
                   i++;
                   return;
             }
-            if (Input.CheckKey(Key.L,ButtonState.Down)){
+            if (Input.CheckKey(Key.L,ButtonState.Pressed)){
                   if (i< input.Count-1){
                         input.Insert(i,"L");
                         i++;
@@ -134,7 +129,7 @@ public class Score{
                   i++;
                   return;
             }
-            if (Input.CheckKey(Key.M,ButtonState.Down)){
+            if (Input.CheckKey(Key.M,ButtonState.Pressed)){
                   if (i< input.Count-1){
                         input.Insert(i,"M");
                         i++;
@@ -144,7 +139,7 @@ public class Score{
                   i++;
                   return;
             }
-            if (Input.CheckKey(Key.N,ButtonState.Down)){
+            if (Input.CheckKey(Key.N,ButtonState.Pressed)){
                   if (i< input.Count-1){
                         input.Insert(i,"N");
                         i++;
@@ -154,7 +149,7 @@ public class Score{
                   i++;
                   return;
             }
-            if (Input.CheckKey(Key.O,ButtonState.Down)){
+            if (Input.CheckKey(Key.O,ButtonState.Pressed)){
                   if (i< input.Count-1){
                         input.Insert(i,"O");
                         i++;
@@ -164,7 +159,7 @@ public class Score{
                   i++;
                   return;
             }
-            if (Input.CheckKey(Key.P,ButtonState.Down)){
+            if (Input.CheckKey(Key.P,ButtonState.Pressed)){
                   if (i< input.Count-1){
                         input.Insert(i,"P");
                         i++;
@@ -174,7 +169,7 @@ public class Score{
                   i++;
                   return;
             }
-            if (Input.CheckKey(Key.Q,ButtonState.Down)){
+            if (Input.CheckKey(Key.Q,ButtonState.Pressed)){
                   if (i< input.Count-1){
                         input.Insert(i,"Q");
                         i++;
@@ -184,7 +179,7 @@ public class Score{
                   i++;
                   return;
             }
-            if (Input.CheckKey(Key.R,ButtonState.Down)){
+            if (Input.CheckKey(Key.R,ButtonState.Pressed)){
                   if (i< input.Count-1){
                         input.Insert(i,"R");
                         i++;
@@ -194,7 +189,7 @@ public class Score{
                   i++;
                   return;
             }
-            if (Input.CheckKey(Key.S,ButtonState.Down)){
+            if (Input.CheckKey(Key.S,ButtonState.Pressed)){
                   if (i< input.Count-1){
                         input.Insert(i,"S");
                         i++;
@@ -204,7 +199,7 @@ public class Score{
                   i++;
                   return;
             }
-            if (Input.CheckKey(Key.T,ButtonState.Down)){
+            if (Input.CheckKey(Key.T,ButtonState.Pressed)){
                   if (i< input.Count-1){
                         input.Insert(i,"T");
                         i++;
@@ -214,7 +209,7 @@ public class Score{
                   i++;
                   return;
             }
-            if (Input.CheckKey(Key.U,ButtonState.Down)){
+            if (Input.CheckKey(Key.U,ButtonState.Pressed)){
                   if (i< input.Count-1){
                         input.Insert(i,"U");
                         i++;
@@ -224,7 +219,7 @@ public class Score{
                   i++;
                   return;
             }
-            if (Input.CheckKey(Key.V,ButtonState.Down)){
+            if (Input.CheckKey(Key.V,ButtonState.Pressed)){
                   if (i< input.Count-1){
                         input.Insert(i,"V");
                         i++;
@@ -234,7 +229,7 @@ public class Score{
                   i++;
                   return;
             }
-            if (Input.CheckKey(Key.W,ButtonState.Down)){
+            if (Input.CheckKey(Key.W,ButtonState.Pressed)){
                   if (i< input.Count-1){
                         input.Insert(i,"W");
                         i++;
@@ -244,7 +239,7 @@ public class Score{
                   i++;
                   return;
             }
-            if (Input.CheckKey(Key.X,ButtonState.Down)){
+            if (Input.CheckKey(Key.X,ButtonState.Pressed)){
                   if (i< input.Count-1){
                         input.Insert(i,"X");
                         i++;
@@ -254,7 +249,7 @@ public class Score{
                   i++;
                   return;
             }
-            if (Input.CheckKey(Key.Y,ButtonState.Down)){
+            if (Input.CheckKey(Key.Y,ButtonState.Pressed)){
                   if (i < input.Count-1){
                         input.Insert(i,"Y");
                         i++;
@@ -263,7 +258,7 @@ public class Score{
                   input.Add("Y");
                   i++;
             }
-            if (Input.CheckKey(Key.Z,ButtonState.Down)){
+            if (Input.CheckKey(Key.Z,ButtonState.Pressed)){
                   if (i< input.Count-1){
                         input.Insert(i,"Z");
                         i++;
@@ -273,7 +268,7 @@ public class Score{
                   i++;
                   return;
             }
-            if (Input.CheckKey(Key.Space,ButtonState.Down)){
+            if (Input.CheckKey(Key.Space,ButtonState.Pressed)){
                   if (i< input.Count-1){
                         input.Insert(i," ");
                         i++;
@@ -283,22 +278,32 @@ public class Score{
                   i++;
                   return;
             }
-            if (Input.CheckKey(Key.Backspace,ButtonState.Down)){
-                  input.RemoveAt(i);
-                  i--;
+            if (Input.CheckKey(Key.Backspace,ButtonState.Pressed)){
+                  if (i>0){
+                        input.RemoveAt(i-1);
+                        i--;
+                        ii--;
+                  }
             }
-            if (Input.CheckKey(Key.Right,ButtonState.Down)){
-                  if (i < input.Count){
+            if (Input.CheckKey(Key.Right,ButtonState.Pressed)){
+                  if (i < input.Count-1){
                         i++;
                   }
             }
-            if (Input.CheckKey(Key.Left, ButtonState.Down)){
+            if (Input.CheckKey(Key.Left, ButtonState.Pressed)){
                   if (i > 0){
                         i--;
                   }
-            }            
+            }
+            if (i!=ii){
+                  input.RemoveAt(ii);
+                  input.Insert(i,"|");
+            }
+            ii = i;          
+            nametostring();
       }
       public void nametostring(){
+            name = "";
             foreach (var lletra in input){
                   name += lletra;
             }
