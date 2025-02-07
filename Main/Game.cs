@@ -24,7 +24,7 @@ namespace Space
       private List <Image> BalaSkins = new();
       private Image explosio;
       private List <Image> BGrounds = new();
-      private  int status = 0; // 0 inici, 1 tria nau, 2 joc, 3 ending mostant puntuacions, 4 registre persona, 5 calcul puntuacions;
+      private int status = 0; // 0 inici, 1 tria nau, 2 joc, 3 ending mostant puntuacions, 4 registre persona, 5 calcul puntuacions;
       public Game(Window finestra)
       {
             window = finestra;
@@ -211,9 +211,7 @@ namespace Space
             File.ReadAllLines("Objectes/Score/score.txt").Select(line => line.Split('-')).ToList().ForEach(parts => puntuacio[parts[0]] = int.Parse(parts[1]));
             if (!puntuacio.ContainsKey(score.name)){ // Si el jugador no esta a la llista de puntuacions, s'afegira.
                   puntuacio.Add(score.name,coet.score);
-                  return;
-            }
-            if (coet.score > puntuacio[score.name]){ // Si el jugador ja esta a la llista de puntuacions, es comprovara si la seva puntuacio es mes gran que la que ja te.
+            } else if (coet.score > puntuacio[score.name]){ // Si el jugador ja esta a la llista de puntuacions, es comprovara si la seva puntuacio es mes gran que la que ja te.
                   puntuacio[score.name] = coet.score;
             }               
             File.WriteAllLines("./Objectes/Score/score.txt", [.. puntuacio.OrderByDescending(x => x.Value).Select(x => $"{x.Key}-{x.Value}").Take(10)]);

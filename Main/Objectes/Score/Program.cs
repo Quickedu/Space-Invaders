@@ -320,7 +320,7 @@ public class Score{
                         i--;
                   }
             }
-             if (i!=ii){
+            if (i!=ii){
                   input.RemoveAt(ii);
                   input.Insert(i,"|");
             }
