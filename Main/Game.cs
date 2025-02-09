@@ -2,6 +2,8 @@ using Heirloom.Desktop;
 using Heirloom;
 using System.Runtime.CompilerServices;
 using System.ComponentModel;
+using System.Security.Cryptography;
+using Microsoft.VisualBasic;
 
 namespace Space
 {
@@ -17,7 +19,8 @@ namespace Space
       private List <Bala> bales = new ();
       private Dictionary <string , int> puntuacio {get;set;}= new ();
       private  string dificultat;
-      private  string nom;
+      private Vector shipvect;
+      private Size midaalien;
       private Rectangle coetrectangle;
       private List <Image> AlienSkins = new();
       private List <Image> NauSkins = new();
@@ -47,7 +50,7 @@ namespace Space
             BGrounds.Add(new Image ("Objectes/BG/Images/BGGame1.png"));
             BGrounds.Add(new Image ("Objectes/BG/Images/BGGame2.png"));
             BGrounds.Add(new Image ("Objectes/BG/Images/BGEnd.png"));
-            coet = new Nau (rect, BalaSkins[0]);
+            coet = new Nau (BalaSkins[0]);
             bg = new BG ();
 
       }
@@ -104,18 +107,18 @@ namespace Space
             gfx.Color = Color.White;
             coet.Scroll(NauSkins);
             if (coet.numeronau==0){
-                  coetrectangle = ((rect.Width/2-44,rect.Height/2+100),size:(80,100));
+                  coetrectangle = ((rect.Width/2-25,rect.Height/2+100),size:(50,100));
                   dificultat = "Dificultat Normal";
             } else {
                   dificultat = "Dificultat Dificil";
-                  coetrectangle = ((rect.Width/2-100,rect.Height/2+20),size:(200,250));
+                  coetrectangle = ((rect.Width/2-62.5f,rect.Height/2+30),size:(125,250));
                   }
 
             gfx.DrawImage(coet.skin,coetrectangle);
 
-            gfx.DrawText($"Nau {coet.i} - {dificultat}",(rect.Width/2,rect.Height/2), Font.Default,30,TextAlign.Center);
+            gfx.DrawText($"Nau {coet.i+1} - {dificultat}",(rect.Width/2,rect.Height/2), Font.Default,30,TextAlign.Center);
             if (Input.CheckKey(Key.Space,ButtonState.Pressed)){
-                  var shipvect = new Vector(rect.Width/2,rect.Height-50);
+                  shipvect = new Vector(rect.Width/2-(coet.posicioR.Width/2),rect.Height-250);
                   coet.vect(shipvect);
                   crearalien();
                   status = 4;
@@ -129,64 +132,91 @@ namespace Space
             rect = new Rectangle((0,0), window.Size); 
             bg.Spawn(gfx,rect);
             foreach (var alien in invaders){
-                  alien.Shoot();
+                  if (alien.Shoot(coet)){
+                        bales.Add(new Bala (1,BalaSkins[1],(alien.posicioR.X+(alien.posicioR.Width/2),alien.posicioR.Y+alien.posicioR.Height),coet.newspawn)); 
+                  }
             }
             coet.Shoot();
-            foreach (var bala in bales){
-                  if (bala.TocarNau (coet)){
-                  bales.Remove(bala);
-                  if (coet.HP -1 == 0){
+            for (int i = bales.Count - 1; i >= 0; i--){
+                  var bala = bales[i];
+                  if (bala.TocarNau(coet)){
+                        bales.Clear();
+                        if (coet.HP - 1 == 0){
+                        invaders.Clear();
                         status = 5;
                         return;
-                  }
-                  coet.HP--;
+                        }
+                        coet.HP--;
+                        coet.vect(shipvect);
+                        break;
                   }
             }
-            foreach (var bala in coet.dispars){
-                  foreach (var alien in invaders){
+            for (int i = coet.dispars.Count - 1; i >= 0; i--) {
+                  var bala = coet.dispars[i];
+                  foreach (var alien in invaders) {
                         if (bala.TocarAlien(alien)){
-                              bales.Remove(bala);
-                              if (alien.hp -1 == 0){
-                                    invaders.Remove(alien);
-                              } else {
-                                    alien.hp--;
-                              }
+                              coet.dispars.Remove(bala);
+                              invaders.Remove(alien);
+                              coet.score++;
+                              break;
                         }
                   }
             }
-            
+            if (invaders.Count == 0) {
+                  bales.Clear();
+                  coet.dispars.Clear();
+                  crearalien();
+                  bg.Canvifons(coet,BGrounds,status);
+            }
             foreach (var alien in invaders){
                   alien.Move(invaders,rect);
                   alien.Spawn(gfx);
             };
-            
+            for (int i = bales.Count - 1; i >= 0; i--){
+                  var bala = bales[i];
+                  if (!bala.Move(rect)){
+                        bales.Remove(bala);
+                        continue;
+                  }
+                  bala.Spawn(gfx);
+            }
             coet.Move(rect);
-            coet.Spawn(gfx);
+            coet.Spawn(gfx,rect);
 
             var fps = gfx.CurrentFPS;
             var Sfps = Math.Round(fps).ToString();
             gfx.DrawText(Sfps,(15,8),Font.Default,30);
-            gfx.DrawText($"HP: {coet.HP}",(window.Height,window.Width),Font.Default,30,TextAlign.Right);
-            gfx.DrawText($"BALES: {5-coet.municio}/5",(window.Height,window.Width),Font.Default,30,TextAlign.Right);
+            gfx.DrawText($"HP: {coet.HP}",(rect.Width-50,10),Font.Default,30,TextAlign.Right);
+            gfx.DrawText($"BALES: {5-coet.municio}/5",(rect.Width-50,45),Font.Default,30,TextAlign.Right);
+            gfx.DrawText($"SCORE: {coet.score}",(rect.Width-50,80),Font.Default,30,TextAlign.Right);
       }
       public void Final (GraphicsContext gfx, float dt){
             bg.Spawn(gfx,rect);
             var text = "Game Over!";
             var text3 = "Press Space to restart";
             var text4 = "Press Esc to exit";
+            var scoreboard = "SCOREBOARD";
             //---------------------------------
-            foreach (var i in puntuacio.OrderByDescending(x => x.Value).Take(10)){ //agafem els 10 més elevats.
-                  var puntuacioText = $"{i.Key}: {i.Value}";
-                  for (int j = 1; j <= 10; j++){    //BUCLE PER ESCRIURE LA PUNTUACIO DE TOTS ELS JUGADORS GUARDATS DINS EL TXT.
-                  gfx.DrawText(puntuacioText,(50+5*j,window.Width),Font.Default,30,TextAlign.Center);
-                  }
+            var j = 0;
+            foreach (var nom in puntuacio.OrderByDescending(x => x.Value)){
+                  j++;
+                  var puntuacioText = $"{nom.Key}: {nom.Value}";
+                  gfx.DrawText(puntuacioText,(rect.Width/2,rect.Height/2-50+35*j),Font.Default,30,TextAlign.Center);
             }
-            gfx.DrawText(text,(window.Height,window.Width),Font.Default,30,TextAlign.Center);
-            gfx.DrawText(text3,(window.Height,window.Width),Font.Default,30,TextAlign.Center);
-            gfx.DrawText(text4,(window.Height,window.Width),Font.Default,30,TextAlign.Center);
+            gfx.Color = Color.Yellow;
+            gfx.DrawText(text,(rect.Width/2,rect.Height/2-400),Font.Default,200,TextAlign.Center);
+            gfx.Color = Color.White;
+            gfx.DrawText(text3,(rect.Width/2,rect.Height/2-200),Font.Default,100,TextAlign.Center);
+            gfx.Color=Color.Black;
+            gfx.DrawText(scoreboard,(rect.Width/2,rect.Height/2-100),Font.Default,100,TextAlign.Center);
+            gfx.Color = Color.White;
+            gfx.DrawText(text4,(rect.Width/2,rect.Height/2+300),Font.Default,30,TextAlign.Center);
             if (Input.CheckKey(Key.Space,ButtonState.Pressed)){
                   status = 1;
                   bg.Canvifons(coet, BGrounds ,status);
+                  coet.dispars.Clear();
+                  coet.newspawn = 0;
+                  coet.score = 0;
                   return;
             }
             if (Input.CheckKey(Key.Escape,ButtonState.Pressed)){
@@ -199,41 +229,41 @@ namespace Space
             bg.Spawn(gfx,rect);
             score.setname();
             gfx.DrawText(score.name,(window.Width/2,window.Height/2),Font.Default,200,TextAlign.Center);
-            gfx.DrawImage(coet.skin,((window.Width-100,window.Height-120),size:(80,100)));
+            gfx.DrawImage(coet.skin,((window.Width-100,window.Height-120),size:(50,100)));
             if (Input.CheckKey(Key.Enter,ButtonState.Down)){
-                  bg.Canvifons(coet, BGrounds ,status);
                   status = 2;
+                  bg.Canvifons(coet, BGrounds ,status);
                   return;
             }
       }
       public void puntuacions (GraphicsContext gfx, float dt){
             //passem del txt a la llista de puntuacions.
-            File.ReadAllLines("Objectes/Score/score.txt").Select(line => line.Split('-')).ToList().ForEach(parts => puntuacio[parts[0]] = int.Parse(parts[1]));
+            if (puntuacio.Count == 0){
+                  File.ReadAllLines("Objectes/Score/score.txt").Select(line => line.Split('-')).ToList().ForEach(parts => puntuacio[parts[0]] = int.Parse(parts[1]));
+            }
             if (!puntuacio.ContainsKey(score.name)){ // Si el jugador no esta a la llista de puntuacions, s'afegira.
                   puntuacio.Add(score.name,coet.score);
             } else if (coet.score > puntuacio[score.name]){ // Si el jugador ja esta a la llista de puntuacions, es comprovara si la seva puntuacio es mes gran que la que ja te.
                   puntuacio[score.name] = coet.score;
             }               
-            File.WriteAllLines("./Objectes/Score/score.txt", [.. puntuacio.OrderByDescending(x => x.Value).Select(x => $"{x.Key}-{x.Value}").Take(10)]);
-            bg.Canvifons(coet, BGrounds ,status);
+            File.WriteAllLines("Objectes/Score/score.txt", [.. puntuacio.OrderByDescending(x => x.Value).Select(x => $"{x.Key}-{x.Value}")]);
             status=3;
+            bg.Canvifons(coet, BGrounds ,status);
       }
       public void crearalien(){
             coet.newspawn++;
-            for (int ii = 1 ; ii<=3 ; ii++){
-                  var i = 0;
-                  invaders.Add(new Alien(AlienSkins[0],new Rectangle((40+(40*i),40*ii+10), new Size(40,40))));
-                  while (!invaders[i].posicioR.Overlaps(rect)){
-                        if (coet.numeronau == 1 && coet.newspawn % 5 == 0){
-                                    invaders.Add(new Alien(AlienSkins[0],new Rectangle((40+(40*i),40*ii+10), new Size(40,40))));
-                                    i++;
-                              }
-                        if (coet.numeronau==0){
-                        invaders.Add(new Alien(AlienSkins[0],new Rectangle((40+(40*i),40*ii+10), new Size(40,40))));
-                        i++;
+            midaalien = new Size (100,100);
+            int columnes = (int)Math.Floor(rect.Width / (100 + 30));
+            int files = 3;
+            for (int fila = 0; fila < files ; fila++){
+                  for (int columna = 0; columna < columnes ; columna++){
+                        var newpos = new Rectangle ((30*(columna+1)+(100*columna),100*(fila+1)+10*(fila+1)), midaalien);
+                        if (rect.Contains(newpos)){
+                              invaders.Add(new Alien(AlienSkins[0],newpos));
                         }
                   }
             }
+            bg.Canvifons(coet,BGrounds,status);
       }
     }
 }

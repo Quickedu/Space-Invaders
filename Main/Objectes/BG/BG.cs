@@ -17,7 +17,7 @@ namespace Space{
             if (status == 2 && nau.newspawn < 4){
                 img = BGrounds[2];
             }
-            if (nau.newspawn >= 4){
+            if (status == 2 && nau.newspawn >= 4){
                 img = BGrounds[3];
             }
             if (status == 3){

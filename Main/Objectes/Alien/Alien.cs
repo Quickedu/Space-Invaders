@@ -1,6 +1,7 @@
 ﻿using Heirloom;
+using Heirloom.Geometry;
 namespace Space;
-public class Alien : Shoot_Objects{
+public class Alien{    
     public int hp {get; set;}
     public Rectangle posicioR {get;set;}
     public Vector posicioV {get;set;}
@@ -9,40 +10,36 @@ public class Alien : Shoot_Objects{
     private int velocitat = 5;
     private Random rnd = new ();
     private int probabilitat;
-    private int disparo;
+    private float disparo = 0;
     public Alien(Image imatge, Rectangle rectangle)
     {
         posicioR = rectangle;
         img = imatge;
+        posicioV = (posicioR.X, posicioR.Y);
     }
-    public bool Shoot (){
-        probabilitat = rnd.Next(0,51);
-        if (probabilitat <= disparo)return true;
-        return false;
+    public bool Shoot (Nau coet){
+        probabilitat = rnd.Next(0,600);
+        return probabilitat <= disparo+coet.newspawn*1.25f;
     }
-    public bool Costat (List <Alien> invaders, Vector newpos, Rectangle rect){
-        var nourectangle = new Rectangle (newpos,img.Size);
+    public bool Costat (List <Alien> invaders, Rectangle newpos, Rectangle rect){
+        if (!rect.Contains(newpos))return true;
         foreach (var alien in invaders){
             if (alien==this) continue;
-            if (nourectangle.Overlaps(alien.posicioR)||!rect.Contains(nourectangle)){
+            if (newpos.Overlaps(alien.posicioR)){
                 return true;
             }
         }
         return false;
     }
     public void Move (List <Alien> invaders, Rectangle rect){
-        Vector newpos = (0,posicioV.Y);
-        newpos.X = posicioV.X+velocitat*direccio;
+        var newpos = posicioR;
+        newpos.X += velocitat*direccio;
         if(Costat(invaders,newpos,rect)){
-            newpos.X = posicioV.X+(velocitat*direccio*-1);
-            if (Costat(invaders,newpos,rect)){
-                return;
-            }
             direccio*=-1;
         }
-        posicioV = (newpos.X,posicioV.Y);
+        posicioR = newpos;
     }
     public void Spawn (GraphicsContext gfx){
-        gfx.DrawImage (img,posicioV);
+        gfx.DrawImage (img,posicioR);
     }
 }

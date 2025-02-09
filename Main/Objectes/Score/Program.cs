@@ -329,6 +329,13 @@ public class Score{
       }
       public void nametostring(){
             name = "";
+            if (Input.CheckKey(Key.Enter, ButtonState.Pressed)){
+                foreach (var lletra in input){
+                  if (lletra == "|") continue;
+                  name += lletra;
+                  }
+                  return;
+            }
             foreach (var lletra in input){
                   name += lletra;
             }
