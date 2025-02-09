@@ -172,6 +172,7 @@ namespace Space
                   alien.Move(invaders,rect);
                   alien.Spawn(gfx);
             };
+            gfx.Color = Color.Green;
             for (int i = bales.Count - 1; i >= 0; i--){
                   var bala = bales[i];
                   if (!bala.Move(rect)){
@@ -180,6 +181,7 @@ namespace Space
                   }
                   bala.Spawn(gfx);
             }
+            gfx.Color = Color.White;
             coet.Move(rect);
             coet.Spawn(gfx,rect);
 
@@ -198,6 +200,7 @@ namespace Space
             var scoreboard = "SCOREBOARD";
             //---------------------------------
             var j = 0;
+            gfx.Color = Color.Black;
             foreach (var nom in puntuacio.OrderByDescending(x => x.Value)){
                   j++;
                   var puntuacioText = $"{nom.Key}: {nom.Value}";
@@ -228,6 +231,7 @@ namespace Space
             //crear un registre per a la puntuacio on la persona posa el seu nom.
             bg.Spawn(gfx,rect);
             score.setname();
+            gfx.DrawText("Write your name!",(window.Width/2,window.Height/2-200),Font.Default,200,TextAlign.Center);
             gfx.DrawText(score.name,(window.Width/2,window.Height/2),Font.Default,200,TextAlign.Center);
             gfx.DrawImage(coet.skin,((window.Width-100,window.Height-120),size:(50,100)));
             if (Input.CheckKey(Key.Enter,ButtonState.Down)){
