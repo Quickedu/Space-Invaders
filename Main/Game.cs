@@ -243,14 +243,19 @@ namespace Space
       public void puntuacions (GraphicsContext gfx, float dt){
             //passem del txt a la llista de puntuacions.
             if (puntuacio.Count == 0){
-                  File.ReadAllLines("Objectes/Score/score.txt").Select(line => line.Split('-')).ToList().ForEach(parts => puntuacio[parts[0]] = int.Parse(parts[1]));
+                  File.ReadAllLines("Objectes/Score/Score.txt").Select(line => line.Split('-')).ToList().ForEach(parts => puntuacio[parts[0]] = int.Parse(parts[1]));
             }
+            File.Delete("Objectes/Score/Score.txt");
             if (!puntuacio.ContainsKey(score.name)){ // Si el jugador no esta a la llista de puntuacions, s'afegira.
                   puntuacio.Add(score.name,coet.score);
             } else if (coet.score > puntuacio[score.name]){ // Si el jugador ja esta a la llista de puntuacions, es comprovara si la seva puntuacio es mes gran que la que ja te.
                   puntuacio[score.name] = coet.score;
-            }               
-            File.WriteAllLines("Objectes/Score/score.txt", [.. puntuacio.OrderByDescending(x => x.Value).Select(x => $"{x.Key}-{x.Value}")]);
+            }
+            if (puntuacio.Count()<10){
+                  File.WriteAllLines("Objectes/Score/Score.txt", puntuacio.OrderByDescending(x => x.Value).Select(x => $"{x.Key}-{x.Value}").Take(10));
+            } else {
+                  File.WriteAllLines("Objectes/Score/Score.txt", puntuacio.OrderByDescending(x => x.Value).Select(x => $"{x.Key}-{x.Value}"));
+            }
             status=3;
             bg.Canvifons(coet, BGrounds ,status);
       }
